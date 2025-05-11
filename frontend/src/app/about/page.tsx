@@ -5,6 +5,15 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+interface Project {
+  period: string;
+  title: string;
+  role: string;
+  team_size?: number;
+  description: string;
+  languages: string[];
+}
+
 interface ProfileData {
   name: string;
   age: number;
@@ -19,7 +28,7 @@ interface ProfileData {
     role: string;
   };
   pr: string;
-  projects: any[];
+  projects: Project[];
 }
 
 export default function AboutPage() {
