@@ -1,0 +1,719 @@
+{
+  "スキルシート": [
+    {
+      "スキルシート": "技術者名",
+      "__EMPTY_1": "森田　浩司",
+      "__EMPTY_4": "所　　属"
+    },
+    {
+      "スキルシート": "年　　齢",
+      "__EMPTY_1": "40歳",
+      "__EMPTY_4": "性　　別",
+      "__EMPTY_6": "男性"
+    },
+    {
+      "スキルシート": "資　　格",
+      "__EMPTY_1": "初級システムアドミニストレータ、基本情報処理技術者試験、ソフトウェア開発技術者",
+      "__EMPTY_4": "学　　歴",
+      "__EMPTY_6": "専門学校卒"
+    },
+    {
+      "スキルシート": "稼　　動",
+      "__EMPTY_1": "2025年7月〜",
+      "__EMPTY_4": "最 寄 駅",
+      "__EMPTY_6": "北大阪急行電鉄桃山台"
+    },
+    {
+      "スキルシート": "＿"
+    },
+    {
+      "スキルシート": "得意分野",
+      "__EMPTY_1": "流通・小売業の販売管理"
+    },
+    {
+      "スキルシート": "得意技術",
+      "__EMPTY_1": ".net C#、Java"
+    },
+    {
+      "スキルシート": "得意業務",
+      "__EMPTY_1": "基本設計以降"
+    },
+    {
+      "スキルシート": "自己PR",
+      "__EMPTY_1": "業種としては、流通・小売業の販売管理システムが中心。また、セキュリティシステムの構築・提案等の経験も有。前会社がSIであったため、システム構築におけるフェイズは一通り経験済み。システム構築では、開発・設計・サブリーダー・プロジェクトリーダーを経験しており、システム提案等も行っていた。"
+    },
+    {
+      "スキルシート": "期間",
+      "__EMPTY_3": "業務内容",
+      "__EMPTY_4": "役割\r\n\r\n規模",
+      "__EMPTY_5": "使用言語",
+      "__EMPTY_6": "DB",
+      "__EMPTY_7": "サーバOS",
+      "__EMPTY_8": "FW・MW\r\nツール\r\n等",
+      "__EMPTY_9": "担当工程"
+    },
+    {
+      "__EMPTY_9": "要件定義",
+      "__EMPTY_10": "基本設計",
+      "__EMPTY_11": "詳細設計",
+      "__EMPTY_12": "実装・単体",
+      "__EMPTY_13": "結合テスト",
+      "__EMPTY_14": "総合テスト",
+      "__EMPTY_15": "保守・運用"
+    },
+    {
+      "スキルシート": 1,
+      "__EMPTY": 43466,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 43497,
+      "__EMPTY_3": "■マーケティングポータルサイトの改修",
+      "__EMPTY_5": "PHP\r\nJava Script\r\nPL/pgSQL",
+      "__EMPTY_6": "PostgreSQL",
+      "__EMPTY_7": "CentOS",
+      "__EMPTY_8": "Eclipse\r\nVS code\r\nSwagger\r\nRedmine\r\nGitlab",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "\r\n≪担当業務≫\r\n　詳細設計〜システムテストおよび、技術調査\r\n≪習得スキル≫\r\n　・PHPを使用したシステム開発スキル\r\n　・ProgreSQLを使用したシステム開発スキル",
+      "__EMPTY_4": "チーム\r\n5名\r\n\r\n開発\r\n3名\r\n\r\n全体\r\n-名"
+    },
+    {
+      "__EMPTY": 2
+    },
+    {
+      "スキルシート": 2,
+      "__EMPTY": 36617,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 36708,
+      "__EMPTY_3": "卸売業基幹システムの構築",
+      "__EMPTY_5": "Visual Basic\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　卸売業基幹システムの実装〜運用保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n３名\r\n\r\n開発\r\n１名\r\n\r\n全体\r\n１２名"
+    },
+    {
+      "__EMPTY": 4
+    },
+    {
+      "スキルシート": 3,
+      "__EMPTY": 36739,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 37043,
+      "__EMPTY_3": "卸売業基幹システムの構築",
+      "__EMPTY_5": "Visual Basic\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　卸売業基幹システムの実装〜運用保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n３名\r\n\r\n開発\r\n１名\r\n\r\n全体\r\n１２名"
+    },
+    {
+      "__EMPTY": 11
+    },
+    {
+      "スキルシート": 4,
+      "__EMPTY": 37104,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 37165,
+      "__EMPTY_3": "製薬業創薬支援システム構築",
+      "__EMPTY_5": "Visual Basic\r\nJava Script",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\nASP.net",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　製薬業創薬支援システム、実装〜運用保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n３名\r\n\r\n開発\r\n１名\r\n\r\n全体\r\n１２名"
+    },
+    {
+      "__EMPTY": 3
+    },
+    {
+      "スキルシート": 5,
+      "__EMPTY": 37196,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 37408,
+      "__EMPTY_3": "製薬業営業支援システム構築",
+      "__EMPTY_5": "Visual Basic\r\nPL/SQL\r\nAccess",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　製薬業営業支援システム、詳細設計〜運用保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n３名\r\n\r\n開発\r\n１名\r\n\r\n全体\r\n１２名"
+    },
+    {
+      "__EMPTY": 8
+    },
+    {
+      "スキルシート": 6,
+      "__EMPTY": 37438,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 37469,
+      "__EMPTY_3": "小売業販売管理および基幹システムの構築",
+      "__EMPTY_5": ".net VB\r\nPL/SQL\r\nAccess",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　小売業販売管理および基幹システムの詳細設計〜運用保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n4名\r\n\r\n開発\r\n3名\r\n\r\n全体\r\n4名"
+    },
+    {
+      "__EMPTY": 2
+    },
+    {
+      "スキルシート": 7,
+      "__EMPTY": 37500,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 38047,
+      "__EMPTY_3": "小売業販売管理および基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　小売業販売管理および基幹システムの要件定義〜運用保守\r\n≪習得スキル≫\r\n　顧客との要件調整スキル、プロジェクトサブリーダー経験\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n10名\r\n\r\n開発\r\n8名\r\n\r\n全体\r\n１0名"
+    },
+    {
+      "__EMPTY": 19
+    },
+    {
+      "スキルシート": 8,
+      "__EMPTY": 38078,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 38292,
+      "__EMPTY_3": "小売業販売管理および基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　小売業販売管理および基幹システムの要件定義〜運用保守\r\n≪習得スキル≫\r\n　顧客との要件調整スキル、プロジェクトリーダー経験\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n6名\r\n\r\n開発\r\n５名\r\n\r\n全体\r\n6名"
+    },
+    {
+      "__EMPTY": 8
+    },
+    {
+      "スキルシート": 9,
+      "__EMPTY": 38322,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 38353,
+      "__EMPTY_3": "小売業の販売管理および基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　小売業の販売管理および基幹システムの要件定義〜運用保守\r\n≪習得スキル≫\r\n　顧客との要件調整スキル、プロジェクトリーダー経験\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n８名\r\n\r\n開発\r\n６名\r\n\r\n全体\r\n８名"
+    },
+    {
+      "__EMPTY": 2
+    },
+    {
+      "スキルシート": 10,
+      "__EMPTY": 38384,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 38534,
+      "__EMPTY_3": "小売業基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　小売業基幹システムの要件定義〜詳細設計\r\n≪習得スキル≫\r\n　顧客との要件調整スキル、プロジェクトリーダー経験\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n２０名\r\n\r\n開発\r\n１０名\r\n\r\n全体\r\n２０名"
+    },
+    {
+      "__EMPTY": 6
+    },
+    {
+      "スキルシート": 11,
+      "__EMPTY": 38596,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 39052,
+      "__EMPTY_3": "■GRANDIT(人事給与)のアドオン開発",
+      "__EMPTY_5": ".net C#\r\nT-SQL\r\nJava Script",
+      "__EMPTY_6": "SqlServer",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW\r\nIIS",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　GRANDIT(人事給与)のアドオン開発、基本設計〜運用・保守\r\n\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n５名\r\n\r\n開発\r\n１５名\r\n\r\n全体\r\n１８名"
+    },
+    {
+      "__EMPTY": 16
+    },
+    {
+      "スキルシート": 12,
+      "__EMPTY": 39114,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 39264,
+      "__EMPTY_3": "■製造業基幹システムの基盤構築",
+      "__EMPTY_5": ".net(VB, C#)",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　製造業基幹システムの基盤構築、基本設計〜システムテスト\r\n\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n５名\r\n\r\n開発\r\n１８名\r\n\r\n全体\r\n２０名"
+    },
+    {
+      "__EMPTY": 6
+    },
+    {
+      "スキルシート": 13,
+      "__EMPTY": 39326,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 39479,
+      "__EMPTY_3": "■診療点数集計システムの構築",
+      "__EMPTY_5": "C",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Power sort",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　診療点数集計システムの詳細設計〜システムテスト\r\n\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n３名\r\n\r\n開発\r\n１名\r\n\r\n全体\r\n-名"
+    },
+    {
+      "__EMPTY": 6
+    },
+    {
+      "スキルシート": 14,
+      "__EMPTY": 39508,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 39965,
+      "__EMPTY_3": "■商社向け基幹システムにおけるワークフロー基盤開発",
+      "__EMPTY_5": "Java\r\nPL/SQL\r\nJava Script",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "eclipse\r\nStruts",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　商社向け基幹システムにおけるワークフロー基盤開発の詳細設計〜システムテスト\r\n≪習得スキル≫\r\n　Javaを使用したシステム開発\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n５名\r\n\r\n開発\r\n２名\r\n\r\n全体\r\n-名"
+    },
+    {
+      "__EMPTY": 16
+    },
+    {
+      "スキルシート": 15,
+      "__EMPTY": 39995,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 40179,
+      "__EMPTY_3": "■POSレジを含む販売管理および基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nT-SQL",
+      "__EMPTY_6": "SqlServer",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　POSレジを含む販売管理および基幹システムの要件定義〜運用・保守\r\n≪習得スキル≫\r\n　顧客との要件調整スキル、プロジェクトリーダー経験\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n１０名\r\n\r\n開発\r\n８名\r\n\r\n全体\r\n１２名"
+    },
+    {
+      "__EMPTY": 7
+    },
+    {
+      "スキルシート": 16,
+      "__EMPTY": 40210,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 40544,
+      "__EMPTY_3": "■通販業基幹システムの構築",
+      "__EMPTY_5": ".net C#\r\nT-SQL",
+      "__EMPTY_6": "SqlServer",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　通販業基幹システムの基本設計〜運用・保守\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n２０名\r\n\r\n開発\r\n１５名\r\n\r\n全体\r\n２５名"
+    },
+    {
+      "__EMPTY": 12
+    },
+    {
+      "スキルシート": 17,
+      "__EMPTY": 40575,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 40664,
+      "__EMPTY_3": "■イベント案内システム構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\nASP.net",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　携帯向けのイベント案内・通知システムの詳細設計〜システムテスト\r\n≪習得スキル≫\r\n　携帯向けのシステム開発ノウハウ\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n５名\r\n\r\n開発\r\n２名\r\n\r\n全体\r\n８名"
+    },
+    {
+      "__EMPTY": 4
+    },
+    {
+      "スキルシート": 18,
+      "__EMPTY": 40695,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 40969,
+      "__EMPTY_3": "■物流倉庫流通管理システム構築",
+      "__EMPTY_5": ".net C#\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net compact FW",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "物流倉庫向け流通管理システムの構築\r\n≪担当業務≫\r\n　入庫から出庫、在庫管理全般までのHT用システムの基本設計〜受け入れテストサポート\r\n≪習得スキル≫\r\n ・.net compact framework の知識\r\n ・システムの国際化に関する開発ノウハウ",
+      "__EMPTY_4": "チーム\r\n5名\r\n\r\n開発\r\n3名\r\n\r\n全体\r\n20名"
+    },
+    {
+      "__EMPTY": 10
+    },
+    {
+      "スキルシート": 19,
+      "__EMPTY": 41000,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 41153,
+      "__EMPTY_3": "■.net WFPを用いたシンクライアントシステム構築のための基盤開発",
+      "__EMPTY_5": ".net C#",
+      "__EMPTY_6": "SqlServer",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW\r\n.net WPF",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　基盤開発と基盤の利用方法向けサンプルおよび技術調査\r\n≪習得スキル≫\r\n ・.net WPF開発のノウハウ\r\n ・MQの基礎知識\r\n≪コメント≫",
+      "__EMPTY_4": "チーム\r\n8名\r\n\r\n開発\r\n5名\r\n\r\n全体\r\n12名"
+    },
+    {
+      "__EMPTY": 6
+    },
+    {
+      "スキルシート": 20,
+      "__EMPTY": 41183,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 41699,
+      "__EMPTY_3": " 金融業のシステム統合",
+      "__EMPTY_5": ".net C#",
+      "__EMPTY_6": "SqlServer",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": ".net\r\nJP1\r\nHULFT",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "≪担当業務≫\r\n　詳細設計〜受入テストの実施。移行ツール作成等。\r\n",
+      "__EMPTY_4": "チーム\r\n８名\r\n\r\n開発\r\n５名\r\n\r\n全体\r\n１０名"
+    },
+    {
+      "__EMPTY": 18
+    },
+    {
+      "スキルシート": 21,
+      "__EMPTY": 41730,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 42095,
+      "__EMPTY_3": "自社開発パッケージソフトの次期Version開発支援",
+      "__EMPTY_5": ".net C#\r\nJava Script",
+      "__EMPTY_6": "SQL Server",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net MVC FW\r\nbacklog\r\nTravis",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●"
+    },
+    {
+      "__EMPTY_3": "エンドユーザーが自社で開発しているパッケージソフトの次期Version開発支援\r\n≪担当業務≫\r\n　アジャイル開発手法のスクラムを用いたパッケージソフトの開発に設計段階から開発までを担当した。\r\n≪習得スキル≫\r\n ・スクラムの開発ノウハウ\r\n ・.net MVCの開発ノウハウ",
+      "__EMPTY_4": "チーム\r\n10名\r\n\r\n開発\r\n10名\r\n\r\n全体\r\n13名"
+    },
+    {
+      "__EMPTY": 13
+    },
+    {
+      "スキルシート": 22,
+      "__EMPTY": 42125,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 42309,
+      "__EMPTY_3": "創薬パッケージシステム刷新用共通基盤開発",
+      "__EMPTY_5": ".net C#",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW\r\nWord",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●"
+    },
+    {
+      "__EMPTY_3": "Wordを帳票のテンプレートとして利用するための基盤開発\r\n≪担当業務≫\r\n　・詳細設計書作成、基盤・画面実装、UT/IT/ST\r\n　･基盤利用者サポートおよび障害調査\r\n≪習得スキル≫\r\n　・Office製品のXML加工に関するノウハウ",
+      "__EMPTY_4": "チーム\r\n?名\r\n\r\n開発\r\n2名\r\n\r\n全体\r\n?名"
+    },
+    {
+      "__EMPTY": 7
+    },
+    {
+      "スキルシート": 23,
+      "__EMPTY": 42339,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 42917,
+      "__EMPTY_3": "■経費管理および、経費管理に係るワークフローシステムの刷新",
+      "__EMPTY_4": "__",
+      "__EMPTY_5": ".net C#",
+      "__EMPTY_6": "SQL Server",
+      "__EMPTY_7": "Windows",
+      "__EMPTY_8": "Visual Studio\r\n.net FW\r\nIIS\r\nJP1\r\nHULFT",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "経費管理および、予算管理部分の基本設計〜システムテスト\r\n≪担当業務≫\r\n　･基本・詳細設計書作成、画面・バッチ実装、UT/IT/ST\r\n　･ユーザ･サポートおよび障害調査\r\n≪習得スキル≫\r\n　・Hostからオープン系への移管に関するノウハウ",
+      "__EMPTY_4": "チーム\r\n１３名\r\n\r\n開発\r\n１０名\r\n\r\n全体\r\n１５名"
+    },
+    {
+      "__EMPTY": 20
+    },
+    {
+      "スキルシート": 24,
+      "__EMPTY": 42954,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 43252,
+      "__EMPTY_3": "■BtoB向けポータルサイトの新規構築",
+      "__EMPTY_5": "Java\r\nJava Script\r\nPL/SQL",
+      "__EMPTY_6": "Oracle",
+      "__EMPTY_7": "Redhat",
+      "__EMPTY_8": "eclipse\r\nspring\r\nmybatis\r\nthymeleaf",
+      "__EMPTY_9": "●",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "BtoB向けポータルサイトの新規構築\r\n≪担当業務≫\r\n　･ユーザIFについてのエンドユーザとのシステム要件の検討、調整\r\n　･ベンダーコントロール\r\n　･基本・詳細設計書作成、画面・バッチ実装、UT/IT/ST\r\n　･ユーザ･サポートおよび障害調査\r\n≪習得スキル≫\r\n　・ユーザー提案やプロジェクトの進め方などに関わるノウハウ\r\n　・Springに関する基礎知識\r\n",
+      "__EMPTY_4": "チーム\r\n3名\r\n\r\n開発\r\n2名\r\n\r\n全体\r\n5名"
+    },
+    {
+      "__EMPTY": 10
+    },
+    {
+      "スキルシート": 25,
+      "__EMPTY": 43282,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 43435,
+      "__EMPTY_3": "■IoTデバイスからのセンシングデータ見える化システムの構築",
+      "__EMPTY_5": "Java Script",
+      "__EMPTY_6": "SQL Server",
+      "__EMPTY_7": "CentOS",
+      "__EMPTY_8": "vue.js, node.js\r\nVS code\r\nSwagger\r\nRedmine\r\nGitHub",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "IoTデバイスからのセンシングデータ見える化システムの構築\r\n≪担当業務≫\r\n　･ユーザIFについてのエンドユーザとのシステム要件の検討、調整\r\n　･基本設計書作成、画面・バッチ実装、UT/IT/ST\r\n　･ユーザ･サポートおよび障害調査\r\n≪習得スキル≫\r\n　・ユーザー提案やプロジェクトの進め方などに関わるノウハウ\r\n　・Reactiveに関する基礎知識",
+      "__EMPTY_4": "チーム\r\n15名\r\n\r\n開発\r\n13名\r\n\r\n全体\r\n20名"
+    },
+    {
+      "__EMPTY": 6
+    },
+    {
+      "スキルシート": 26,
+      "__EMPTY": 43466,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 43497,
+      "__EMPTY_3": "■販売管理システムの構築",
+      "__EMPTY_5": "PHP",
+      "__EMPTY_6": "-",
+      "__EMPTY_7": "-",
+      "__EMPTY_8": "VS code\r\nSwagger\r\nGitLab",
+      "__EMPTY_10": "●",
+      "__EMPTY_11": "●",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "販売管理システムのバックエンドAPI開発\r\n≪担当業務≫\r\n　･バックエンドAPIのI/F設計、\r\n　･基本設計書作成、画面・バッチ実装、UT/IT/ST\r\n　･ユーザ･サポートおよび障害調査\r\n≪習得スキル≫\r\n　・PHPに関する基礎知識",
+      "__EMPTY_4": "チーム\r\n8名\r\n\r\n開発\r\n3名\r\n\r\n全体\r\n12名"
+    },
+    {
+      "__EMPTY": 2
+    },
+    {
+      "スキルシート": 26,
+      "__EMPTY": 43525,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 43983,
+      "__EMPTY_3": "■コールセンターシステムの構築",
+      "__EMPTY_5": "Perl\r\nJava\r\nJava Script\r\nDB2",
+      "__EMPTY_6": "-",
+      "__EMPTY_7": "-",
+      "__EMPTY_8": "Brackets\r\nVS Code\r\nGitLab",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●"
+    },
+    {
+      "__EMPTY_3": "業務基盤更改によるコールセンターシステムの再構築、保守\r\n≪担当業務≫\r\n　･基盤更改により発生した変更箇所における既存PGの移行ツール作製\r\n　･チームテックリード及びアプリ共通部品の開発",
+      "__EMPTY_4": "チーム\r\n2-12名\r\n\r\n開発\r\n1-10名\r\n\r\n全体\r\n2-12名"
+    },
+    {
+      "__EMPTY": 16
+    },
+    {
+      "スキルシート": 26,
+      "__EMPTY": 43983,
+      "__EMPTY_1": "-",
+      "__EMPTY_2": 45809,
+      "__EMPTY_3": "■コールセンターシステムの保守",
+      "__EMPTY_5": "Java\r\nJava Script\r\nDB2",
+      "__EMPTY_6": "-",
+      "__EMPTY_7": "-",
+      "__EMPTY_8": "Brackets\r\nVS Code\r\nGitLab",
+      "__EMPTY_12": "●",
+      "__EMPTY_13": "●",
+      "__EMPTY_14": "●",
+      "__EMPTY_15": "●"
+    },
+    {
+      "__EMPTY_3": "業務基盤更改によるコールセンターシステムの保守\r\n≪担当業務≫\r\n　･仕様変更対応、保守\r\n　･チームテックリード及びアプリ共通部品の開発\r\n　･ユーザ･サポートおよび障害調査",
+      "__EMPTY_4": "チーム\r\n2-6名\r\n\r\n開発\r\n1-6名\r\n\r\n全体\r\n2-6名"
+    },
+    {
+      "__EMPTY": 61
+    }
+  ]
+}
