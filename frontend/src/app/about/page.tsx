@@ -29,6 +29,8 @@ interface ProfileData {
   };
   pr: string;
   github: string;
+  email: string;
+  phone: string;
   projects: Project[];
 }
 
@@ -118,6 +120,24 @@ export default function AboutPage() {
                     className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
                     {profileData.github.replace('https://', '')}
+                  </a>
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">メール:</span>
+                  <a 
+                    href={`mailto:${profileData.email}`}
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {profileData.email}
+                  </a>
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">電話:</span>
+                  <a 
+                    href={`tel:${profileData.phone.replace(/-/g, '')}`}
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {profileData.phone}
                   </a>
                 </p>
               </div>
