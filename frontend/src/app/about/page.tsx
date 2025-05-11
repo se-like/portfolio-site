@@ -1,36 +1,70 @@
+'use client';
+
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+interface ProfileData {
+  name: string;
+  age: number;
+  gender: string;
+  qualifications: string[];
+  education: string;
+  available_from: string;
+  station: string;
+  specialties: {
+    business: string;
+    technology: string[];
+    role: string;
+  };
+  pr: string;
+  projects: any[];
+}
 
 export default function AboutPage() {
-  // Career timeline data
-  const careerTimeline = [
-    {
-      year: '2023 - 現在',
-      title: 'コールセンターシステムの保守',
-      description: '業務基盤更改によるコールセンターシステムの保守。仕様変更対応、保守、チームテックリード及びアプリ共通部品の開発、ユーザーサポートおよび障害調査を担当。Java、JavaScript、DB2を使用。'
-    },
-    {
-      year: '2022 - 2023',
-      title: 'コールセンターシステムの構築',
-      description: '業務基盤更改によるコールセンターシステムの再構築、保守。基盤更改により発生した変更箇所における既存PGの移行ツール作製、チームテックリード及びアプリ共通部品の開発を担当。Perl、Java、JavaScript、DB2を使用。'
-    },
-    {
-      year: '2021 - 2022',
-      title: '販売管理システムの構築',
-      description: '販売管理システムのバックエンドAPI開発。バックエンドAPIのI/F設計、基本設計書作成、画面・バッチ実装、UT/IT/ST、ユーザーサポートおよび障害調査を担当。PHPを使用。'
-    },
-    {
-      year: '2020 - 2021',
-      title: 'IoTデバイスからのセンシングデータ見える化システムの構築',
-      description: 'IoTデバイスからのセンシングデータ見える化システムの構築。ユーザーIFについてのエンドユーザーとのシステム要件の検討・調整、基本設計書作成、画面・バッチ実装、UT/IT/ST、ユーザーサポートおよび障害調査を担当。JavaScript、SQL Server、CentOS、vue.js、node.jsを使用。'
-    },
-    {
-      year: '2019 - 2020',
-      title: 'BtoB向けポータルサイトの新規構築',
-      description: 'BtoB向けポータルサイトの新規構築。ユーザーIFについてのエンドユーザーとのシステム要件の検討・調整、ベンダーコントロール、基本・詳細設計書作成、画面・バッチ実装、UT/IT/ST、ユーザーサポートおよび障害調査を担当。Java、JavaScript、PL/SQL、Oracle、Redhat、Spring、mybatis、thymeleafを使用。'
-    }
-  ];
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch('/projects.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setProfileData(data);
+      } catch (error) {
+        console.error('プロフィールデータの読み込みに失敗しました:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl">読み込み中...</div>
+      </div>
+    );
+  }
+
+  if (!profileData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl text-red-500">データの読み込みに失敗しました</div>
+      </div>
+    );
+  }
+
+  // プロジェクトを時系列でソート
+  const sortedProjects = [...profileData.projects].sort((a, b) => {
+    return b.period.localeCompare(a.period);
+  });
 
   return (
     <>
@@ -44,14 +78,28 @@ export default function AboutPage() {
             />
             <div className="mt-6 space-y-4 text-gray-600 dark:text-gray-300">
               <p>
-                森田浩司、40歳。初級システムアドミニストレータ、基本情報処理技術者試験、ソフトウェア開発技術者の資格を保有しています。
+                {profileData.name}、{profileData.age}歳。{profileData.qualifications.join('、')}の資格を保有しています。
               </p>
               <p>
-                流通・小売業の販売管理システムが専門分野で、.NET C#、Javaなどの技術を得意としています。また、セキュリティシステムの構築・提案等の経験も有しています。
+                {profileData.specialties.business}が専門分野で、{profileData.specialties.technology.join('、')}などの技術を得意としています。
               </p>
               <p>
-                システム構築では、開発・設計・サブリーダー・プロジェクトリーダーを経験しており、システム提案等も行ってきました。基本設計以降の工程を得意としています。
+                {profileData.pr}
               </p>
+              <div className="mt-4 space-y-2">
+                <p className="flex items-center">
+                  <span className="font-medium w-24">学歴:</span>
+                  {profileData.education}
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">最寄駅:</span>
+                  {profileData.station}
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">稼働開始:</span>
+                  {profileData.available_from}
+                </p>
+              </div>
             </div>
           </div>
           <div className="relative h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-xl">
@@ -92,7 +140,7 @@ export default function AboutPage() {
           <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-blue-200 dark:bg-blue-900"></div>
           
           <div className="space-y-12">
-            {careerTimeline.map((item, index) => (
+            {sortedProjects.map((project, index) => (
               <div key={index} className="relative">
                 {/* Timeline dot */}
                 <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 -mt-2 w-5 h-5 rounded-full border-4 border-white dark:border-gray-900 bg-blue-500"></div>
@@ -100,14 +148,34 @@ export default function AboutPage() {
                 <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:ml-auto' : 'md:pl-12'}`}>
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <span className="inline-block px-3 py-1 mb-4 text-sm font-semibold text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                      {item.year}
+                      {project.period}
                     </span>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                      {item.title}
+                      {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {item.description}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="px-3 py-1 text-sm font-medium text-purple-800 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                        {project.role}
+                      </span>
+                      {project.team_size && (
+                        <span className="px-3 py-1 text-sm font-medium text-green-800 dark:text-green-300 bg-green-100 dark:bg-green-900/30 rounded-full">
+                          チームサイズ: {project.team_size}名
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      {project.description}
                     </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.languages.map((lang: string, langIndex: number) => (
+                        <span 
+                          key={langIndex}
+                          className="px-2 py-1 text-xs font-medium text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-full"
+                        >
+                          {lang}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
