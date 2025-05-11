@@ -1,11 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 
+interface ProfileData {
+  name: string;
+  email: string;
+  phone: string;
+  github: string;
+}
+
 export default function ContactPage() {
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +24,23 @@ export default function ContactPage() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch('/projects.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setProfileData(data);
+      } catch (error) {
+        console.error('プロフィールデータの読み込みに失敗しました:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -200,16 +225,17 @@ export default function ContactPage() {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      メール
+                      メールアドレス
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      <a href="mailto:contact@example.com" className="hover:text-blue-500">
-                        contact@example.com
-                      </a>
-                    </p>
+                    <a 
+                      href={`mailto:${profileData?.email}`}
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      {profileData?.email}
+                    </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
                     <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -218,30 +244,35 @@ export default function ContactPage() {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      電話
+                      電話番号
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      <a href="tel:+1234567890" className="hover:text-blue-500">
-                        +1 (234) 567-890
-                      </a>
-                    </p>
+                    <a 
+                      href={`tel:${profileData?.phone?.replace(/-/g, '')}`}
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      {profileData?.phone}
+                    </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
                     <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      所在地
+                      GitHub
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      東京都渋谷区
-                    </p>
+                    <a 
+                      href={profileData?.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      {profileData?.github?.replace('https://', '')}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -257,37 +288,19 @@ export default function ContactPage() {
                   <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  ウェブアプリケーション開発（フロントエンド・バックエンド）
+                  販売管理システムの開発（.NET、Java）
                 </li>
                 <li className="flex items-start">
                   <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  モバイルアプリケーション開発（React Native）
+                  基幹システムの設計・開発・保守
                 </li>
                 <li className="flex items-start">
                   <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  クラウドインフラ設計・構築（AWS、Docker、Kubernetes）
-                </li>
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  データベース設計・最適化（SQL、NoSQL）
-                </li>
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  技術コンサルティング・アーキテクチャ設計
-                </li>
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  レガシーシステムのモダナイゼーション
+                  プロジェクトマネジメント
                 </li>
               </ul>
             </div>
