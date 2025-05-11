@@ -28,6 +28,7 @@ interface ProfileData {
     role: string;
   };
   pr: string;
+  github: string;
   projects: Project[];
 }
 
@@ -107,6 +108,17 @@ export default function AboutPage() {
                 <p className="flex items-center">
                   <span className="font-medium w-24">稼働開始:</span>
                   {profileData.available_from}
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">GitHub:</span>
+                  <a 
+                    href={profileData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {profileData.github.replace('https://', '')}
+                  </a>
                 </p>
               </div>
             </div>
