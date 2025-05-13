@@ -1,58 +1,33 @@
-import { ReactNode } from 'react';
-import Link from 'next/link';
+'use client';
 
-interface ButtonProps {
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  href?: string;
-  variant?: 'primary' | 'secondary' | 'outline' | 'gradient';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'outline';
   className?: string;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
 }
 
-export default function Button({
-  children,
-  href,
-  variant = 'primary',
-  size = 'md',
+export default function Button({ 
+  children, 
+  variant = 'primary', 
   className = '',
-  onClick,
-  type = 'button',
-  disabled = false
+  ...props 
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg';
+  const baseStyles = 'inline-flex items-center justify-center px-8 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
   
-  const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary dark:bg-primary dark:hover:bg-primary-dark',
-    secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary dark:bg-secondary dark:hover:bg-secondary-dark',
-    outline: 'border-2 border-primary text-primary hover:bg-primary/10 focus:ring-primary dark:border-primary-light dark:text-primary-light dark:hover:bg-primary-dark/20',
-    gradient: 'gradient-primary text-white hover:shadow-xl hover:-translate-y-1 transition-transform'
+  const variants = {
+    primary: 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed',
+    secondary: 'bg-gray-600 hover:bg-gray-700 text-white shadow-lg hover:shadow-xl focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed',
+    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed'
   };
-  
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-5 py-2.5 text-base',
-    lg: 'px-7 py-3.5 text-lg'
-  };
-  
-  const styles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
-  
-  if (href) {
-    return (
-      <Link href={href} className={styles}>
-        {children}
-      </Link>
-    );
-  }
-  
+
+  const buttonClassName = `${baseStyles} ${variants[variant]} ${className}`.trim();
+
   return (
     <button
-      type={type}
-      className={`${styles} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-      onClick={onClick}
-      disabled={disabled}
+      className={buttonClassName}
+      {...props}
     >
       {children}
     </button>

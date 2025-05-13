@@ -1,45 +1,25 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-
-interface ProfileData {
-  name: string;
-  age: number;
-  gender: string;
-  qualifications: string[];
-  education: string;
-  career: {
-    company: string;
-    period: string;
-    role: string;
-    description: string;
-  }[];
-  interests: string[];
-  email: string;
-  phone: string;
-}
+import { useState, useEffect } from 'react';
+import { ProfileData } from '@/components/layout/types';
 
 export function useProfileData() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const isMounted = useRef(false);
 
   useEffect(() => {
-    // StrictModeの二重レンダリングを防ぐ
-    if (isMounted.current) return;
-    isMounted.current = true;
-
     const fetchData = async () => {
       try {
         const response = await fetch('/profile.json');
         if (!response.ok) {
-          throw new Error('Failed to fetch profile data');
+          throw new Error('プロフィールデータの取得に失敗しました');
         }
         const data = await response.json();
         setProfileData(data);
+        setIsError(false);
       } catch (error) {
-        console.error('Error fetching profile data:', error);
+        console.error('プロフィールデータの取得エラー:', error);
         setIsError(true);
       } finally {
         setIsLoading(false);
@@ -47,10 +27,6 @@ export function useProfileData() {
     };
 
     fetchData();
-
-    return () => {
-      isMounted.current = false;
-    };
   }, []);
 
   return { profileData, isLoading, isError };
