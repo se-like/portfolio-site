@@ -44,6 +44,7 @@ export default function HeroSection() {
                 src="/images/profile/profile-hero.jpg" 
                 alt="フリーランスシステムエンジニア" 
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className={styles.profileImage}
                 priority
                 onError={(e) => {

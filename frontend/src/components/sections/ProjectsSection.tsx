@@ -63,6 +63,7 @@ export default function ProjectsSection() {
                   src={project.imageUrl} 
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="project-image"
                   onError={(e) => {
                     // Fallback to gradient background if image fails to load
