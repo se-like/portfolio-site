@@ -3,54 +3,68 @@
 import { useState } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import ContactForm from '@/components/contact/ContactForm';
+import ContactForm, { FormData } from '@/components/contact/ContactForm';
 import ContactInfo from '@/components/contact/ContactInfo';
 import ContactServices from '@/components/contact/ContactServices';
 import SocialLinks from '@/components/contact/SocialLinks';
 import { useProfileData } from '@/hooks/useProfileData';
 
-interface FormData {
-  name: string;
-  email: string;
-  company: string;
-  message: string;
-}
-
 export default function ContactSection() {
+  const { profileData, isLoading, isError } = useProfileData();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const { profileData } = useProfileData();
-  
+
   const handleSubmit = async (formData: FormData) => {
     setIsSubmitting(true);
-    
+    setSubmitStatus('idle');
+
     try {
-      // In a real application, this would be an API call to the backend
-      // For now, we'll simulate a successful submission after a delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('送信に失敗しました');
+      }
+
       setSubmitStatus('success');
-    } catch {
+    } catch (error) {
+      console.error('送信エラー:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      
-      // Reset status after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
     }
   };
-  
+
+  if (isLoading) {
+    return (
+      <Section bgColor="light">
+        <div className="text-center">読み込み中...</div>
+      </Section>
+    );
+  }
+
+  if (isError || !profileData) {
+    return (
+      <Section bgColor="light">
+        <div className="text-center text-red-500">データの読み込みに失敗しました</div>
+      </Section>
+    );
+  }
+
   return (
     <>
       <Section bgColor="light" id="contact">
-        <SectionHeading 
+        <SectionHeading
           title="お問い合わせ"
           subtitle="プロジェクトのご相談やお問い合わせはこちらから"
           centered
         />
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
           <div>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
@@ -58,7 +72,6 @@ export default function ContactSection() {
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
                 submitStatus={submitStatus}
-                onReset={() => setSubmitStatus('idle')}
               />
             </div>
           </div>
@@ -71,7 +84,7 @@ export default function ContactSection() {
       </Section>
       
       <Section bgColor="light">
-        <SocialLinks />
+        <SocialLinks profileData={profileData} />
       </Section>
     </>
   );
