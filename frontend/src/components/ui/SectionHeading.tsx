@@ -1,11 +1,4 @@
-import { ReactNode } from 'react';
-
-interface SectionHeadingProps {
-  title: string;
-  subtitle?: string | ReactNode;
-  centered?: boolean;
-  className?: string;
-}
+import { SectionHeadingProps } from '@/types/section-heading';
 
 export default function SectionHeading({
   title,

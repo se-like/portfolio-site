@@ -1,13 +1,6 @@
 'use client';
 
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'gradient';
-  size?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+import { ButtonProps } from '@/types/button';
 
 export default function Button({
   children,

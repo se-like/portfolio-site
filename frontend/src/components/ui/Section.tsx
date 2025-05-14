@@ -1,11 +1,4 @@
-import { ReactNode } from 'react';
-
-interface SectionProps {
-  children: ReactNode;
-  className?: string;
-  id?: string;
-  bgColor?: 'white' | 'light' | 'dark';
-}
+import { SectionProps } from '@/types/section';
 
 export default function Section({ 
   children, 
