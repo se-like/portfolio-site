@@ -4,13 +4,7 @@ import { useState, useEffect } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
-
-interface ProfileData {
-  name: string;
-  email: string;
-  phone: string;
-  github: string;
-}
+import { ProfileData } from '@/types/profile';
 
 export default function ContactPage() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
