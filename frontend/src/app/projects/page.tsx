@@ -1,185 +1,206 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Project, ProjectFilter, getPhaseColor } from '@/types/project';
+import ProjectFilters from '@/components/projects/ProjectFilters';
+import Button from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import Button from '@/components/ui/Button';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { ProjectsData, getPhaseColor } from '@/types/project';
 
 export default function ProjectsPage() {
-  const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false);
+  const [filters, setFilters] = useState<ProjectFilter>({
+    technologies: [],
+    phases: [],
+    roles: [],
+  });
+
+  // 利用可能なフィルターオプションを取得
+  const availableTechnologies = Array.from(
+    new Set(projects.flatMap((p) => p.technologies || []))
+  );
+  const availablePhases = Array.from(
+    new Set(projects.flatMap((p) => p.phases))
+  );
+  const availableRoles = Array.from(
+    new Set(projects.map((p) => p.role))
+  );
 
   useEffect(() => {
-    const fetchProjectsData = async () => {
+    const fetchProjects = async () => {
       try {
         const response = await fetch('/projects.json');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error('プロジェクトデータの取得に失敗しました');
         }
         const data = await response.json();
-        console.log('Fetched data:', data);
-        if (!data.projects || !Array.isArray(data.projects)) {
-          throw new Error('Invalid data structure: projects array is missing or invalid');
-        }
-        setProjectsData(data);
+        // 時系列（降順）でソート
+        const sortedProjects = data.projects.sort((a: Project, b: Project) => b.period.localeCompare(a.period));
+        setProjects(sortedProjects);
+        setFilteredProjects(sortedProjects);
+        setIsError(false);
       } catch (error) {
-        console.error('プロジェクトデータの読み込みに失敗しました:', error);
-        setError(error instanceof Error ? error.message : '不明なエラーが発生しました');
+        console.error('プロジェクトデータの取得エラー:', error);
+        setIsError(true);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProjectsData();
+    fetchProjects();
   }, []);
+
+  useEffect(() => {
+    const filtered = projects.filter((project) => {
+      const matchesTechnologies =
+        filters.technologies.length === 0 ||
+        filters.technologies.some((tech) =>
+          project.technologies?.includes(tech)
+        );
+
+      const matchesPhases =
+        filters.phases.length === 0 ||
+        filters.phases.some((phase) => project.phases.includes(phase));
+
+      const matchesRoles =
+        filters.roles.length === 0 || filters.roles.includes(project.role);
+
+      return matchesTechnologies && matchesPhases && matchesRoles;
+    });
+
+    setFilteredProjects(filtered);
+  }, [filters, projects]);
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl">読み込み中...</div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center">読み込み中...</div>
       </div>
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-red-500">エラー: {error}</div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center text-red-500">
+          データの読み込みに失敗しました
+        </div>
       </div>
     );
   }
-
-  if (!projectsData?.projects) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-red-500">データの読み込みに失敗しました</div>
-      </div>
-    );
-  }
-
-  const { projects } = projectsData;
-
-  // プロジェクトを時系列の逆順でソート
-  const sortedProjects = [...projects].sort((a, b) => {
-    // 期間の文字列を比較（例: "2014-04〜2015-04"）
-    return b.period.localeCompare(a.period);
-  });
 
   return (
-    <>
-      <Section>
-        <SectionHeading 
-          title="プロジェクト実績"
-          subtitle="これまでに手がけた主要なプロジェクト一覧"
-        />
-        
-        <div className="mt-12 space-y-16">
-          {sortedProjects.map((project, index) => (
-            <div 
-              key={index} 
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-            >
-              <div className="p-6">
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-sm">
-                    {project.period}
-                  </span>
-                  <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-medium rounded-full shadow-sm">
-                    {project.role}
-                  </span>
-                  {project.team_size && (
-                    <span className="px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-medium rounded-full shadow-sm">
-                      チームサイズ: {project.team_size}名
-                    </span>
-                  )}
-                </div>
-                
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 relative">
-                  {project.title}
-                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
-                </h2>
-                
-                <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed">
-                  {project.description}
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                  使用技術
-                </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {project.languages.map((tech, techIndex) => (
-                    <span 
-                      key={techIndex}
-                          className="px-3 py-1 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 text-sm font-medium rounded-full shadow-sm border border-blue-100 dark:border-blue-900"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                    </div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+        プロジェクト一覧
+      </h1>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* フィルター */}
+        <div className="lg:col-span-1">
+          <ProjectFilters
+            filters={filters}
+            onFilterChange={setFilters}
+            availableTechnologies={availableTechnologies}
+            availablePhases={availablePhases}
+            availableRoles={availableRoles}
+          />
+        </div>
+
+        {/* プロジェクト一覧 */}
+        <div className="lg:col-span-3">
+          {filteredProjects.length === 0 ? (
+            <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+              条件に一致するプロジェクトが見つかりませんでした
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredProjects.map((project, index) => (
+                <div
+                  key={index}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden flex flex-col"
+                >
+                  <div className="relative min-h-[200px] w-full">
+                    {project.imageUrl ? (
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={project.imageUrl}
+                          alt={project.title}
+                          fill
+                          className="object-contain"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600" />
+                    )}
                   </div>
-                  
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                      <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                      開発環境
+
+                  <div className="p-6 flex-grow">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 break-words">
+                      {project.title}
                     </h3>
-                    <div className="space-y-3">
-                      <p className="text-gray-600 dark:text-gray-300 flex items-center">
-                        <span className="font-medium w-20">DB:</span>
-                        <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm shadow-sm border border-gray-100 dark:border-gray-700">
-                          {project.db}
-                        </span>
-                      </p>
-                      <p className="text-gray-600 dark:text-gray-300 flex items-center">
-                        <span className="font-medium w-20">OS:</span>
-                        <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm shadow-sm border border-gray-100 dark:border-gray-700">
-                          {project.os}
-                        </span>
-                      </p>
-                      <p className="text-gray-600 dark:text-gray-300 flex items-center">
-                        <span className="font-medium w-20">ツール:</span>
-                        <span className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-sm shadow-sm border border-gray-100 dark:border-gray-700">
-                          {project.tools.join(', ')}
-                        </span>
-                      </p>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded">
+                        {project.period}
+                      </span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs font-medium rounded">
+                        {project.role}
+                      </span>
                     </div>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    担当フェーズ
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {project.phases.map((phase, phaseIndex) => (
-                      <div 
-                        key={phaseIndex}
-                        className="relative group"
-                      >
-                        <span 
-                          className={`px-4 py-2 bg-gradient-to-r ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105`}
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies?.map((tech: string, techIndex: number) => (
+                        <span
+                          key={techIndex}
+                          className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.phases.map((phase: string, phaseIndex: number) => (
+                        <span
+                          key={phaseIndex}
+                          className={`px-2 py-1 text-xs font-medium rounded bg-gradient-to-r ${getPhaseColor(phase)} text-white`}
                         >
                           {phase}
-                          <span className="ml-2 text-xs opacity-75">→</span>
                         </span>
-                        <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+
+                    <div className="flex space-x-3">
+                      {project.projectUrl && (
+                        <Link href={project.projectUrl}>
+                          <Button size="sm">プロジェクトを見る</Button>
+                        </Link>
+                      )}
+                      {project.githubUrl && (
+                        <Link href={project.githubUrl}>
+                          <Button variant="outline" size="sm">
+                            GitHub
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      </Section>
-      
+      </div>
+
       <Section bgColor="light">
         <SectionHeading 
           title="お問い合わせ"
@@ -199,6 +220,6 @@ export default function ProjectsPage() {
           </Link>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
