@@ -1,18 +1,6 @@
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-
-interface Skill {
-  name: string;
-  icon: string;
-  level: number;
-  description: string;
-}
-
-interface SkillCategory {
-  title: string;
-  description: string;
-  skills: Skill[];
-}
+import { SkillCategory } from '@/types/skill';
 
 export default function SkillsPage() {
   const skillCategories: SkillCategory[] = [
