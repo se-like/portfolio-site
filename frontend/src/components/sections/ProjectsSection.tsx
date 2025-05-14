@@ -15,6 +15,14 @@ export default function ProjectsSection() {
       technologies: ['JavaScript', 'SQL Server', 'CentOS', 'Vue.js', 'Node.js'],
       imageUrl: '/images/projects/project-1.jpg',
       projectUrl: '#',
+      period: '2020-01〜2020-12',
+      role: 'フロントエンドエンジニア',
+      team_size: 5,
+      languages: ['JavaScript', 'Vue.js', 'Node.js'],
+      db: 'SQL Server',
+      os: 'CentOS',
+      tools: ['VSCode', 'Git'],
+      phases: ['要件定義', '設計', '実装', 'テスト'],
     },
     {
       title: 'BtoB向けポータルサイト',
@@ -22,6 +30,14 @@ export default function ProjectsSection() {
       technologies: ['Java', 'JavaScript', 'Oracle', 'Spring', 'Mybatis'],
       imageUrl: '/images/projects/project-2.jpg',
       githubUrl: '#',
+      period: '2019-04〜2020-03',
+      role: 'バックエンドエンジニア',
+      team_size: 8,
+      languages: ['Java', 'JavaScript'],
+      db: 'Oracle',
+      os: 'Linux',
+      tools: ['Eclipse', 'Git'],
+      phases: ['要件定義', '設計', '実装'],
     },
     {
       title: '小売業販売管理システム',
@@ -29,6 +45,14 @@ export default function ProjectsSection() {
       technologies: ['.NET C#', 'Oracle', 'Windows', '.NET Framework'],
       imageUrl: '/images/projects/project-3.jpg',
       projectUrl: '#',
+      period: '2018-06〜2019-03',
+      role: 'プロジェクトリーダー',
+      team_size: 10,
+      languages: ['C#', '.NET Framework'],
+      db: 'Oracle',
+      os: 'Windows',
+      tools: ['Visual Studio', 'SVN'],
+      phases: ['要件定義', '設計', '実装', 'テスト', '保守'],
     },
     {
       title: 'コールセンターシステム',
@@ -36,6 +60,14 @@ export default function ProjectsSection() {
       technologies: ['Java', 'JavaScript', 'Perl', 'DB2', 'GitLab'],
       imageUrl: '/images/projects/project-4.jpg',
       githubUrl: '#',
+      period: '2017-01〜2018-05',
+      role: 'テックリード',
+      team_size: 6,
+      languages: ['Java', 'Perl', 'JavaScript'],
+      db: 'DB2',
+      os: 'Linux',
+      tools: ['IntelliJ', 'GitLab'],
+      phases: ['設計', '実装', 'テスト', '保守'],
     }
   ];
 
@@ -87,7 +119,7 @@ export default function ProjectsSection() {
               </p>
               
               <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech, techIndex) => (
+                {project.technologies?.map((tech, techIndex) => (
                   <span 
                     key={techIndex}
                     className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded"

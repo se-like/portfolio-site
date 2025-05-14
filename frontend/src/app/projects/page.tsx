@@ -5,36 +5,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
-interface Project {
-  period: string;
-  title: string;
-  role: string;
-  team_size: number | null;
-  languages: string[];
-  db: string;
-  os: string;
-  tools: string[];
-  phases: string[];
-  description: string;
-}
-
-interface ProfileData {
-  name: string;
-  age: number;
-  gender: string;
-  qualifications: string[];
-  education: string;
-  available_from: string;
-  station: string;
-  specialties: {
-    business: string;
-    technology: string[];
-  role: string;
-  };
-  pr: string;
-  projects: Project[];
-}
+import { ProfileData } from '@/types/profile';
 
 export default function ProjectsPage() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);

@@ -1,3 +1,5 @@
+import { Project } from './project';
+
 export interface ProfileData {
   name: string;
   age: number;
@@ -15,7 +17,7 @@ export interface ProfileData {
   github: string;
   email: string;
   phone: string;
-  projects: CareerProject[];
+  projects: Project[];
 }
 
 export interface CareerProject {
