@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import Link from 'next/link';
 
 interface Project {
   title: string;
@@ -106,14 +107,18 @@ export default function ProjectsSection() {
               
               <div className="flex space-x-3 mt-4">
                 {project.projectUrl && (
-                  <Button href={project.projectUrl} size="sm">
-                    プロジェクトを見る
-                  </Button>
+                  <Link href={project.projectUrl}>
+                    <Button size="sm">
+                      プロジェクトを見る
+                    </Button>
+                  </Link>
                 )}
                 {project.githubUrl && (
-                  <Button href={project.githubUrl} variant="outline" size="sm">
-                    GitHub
-                  </Button>
+                  <Link href={project.githubUrl}>
+                    <Button variant="outline" size="sm">
+                      GitHub
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>
@@ -122,9 +127,11 @@ export default function ProjectsSection() {
       </div>
       
       <div className="mt-12 text-center">
-        <Button href="/projects" variant="secondary" className="hover-lift">
-          すべてのプロジェクトを見る
-        </Button>
+        <Link href="/projects">
+          <Button variant="secondary" className="hover-lift">
+            すべてのプロジェクトを見る
+          </Button>
+        </Link>
       </div>
     </Section>
   );
