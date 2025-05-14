@@ -5,15 +5,19 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ProfileData } from '@/types/profile';
+import { CareerProject } from '@/types/profile';
+
+interface ProjectsData {
+  projects: CareerProject[];
+}
 
 export default function ProjectsPage() {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProfileData = async () => {
+    const fetchProjectsData = async () => {
       try {
         const response = await fetch('/projects.json');
         if (!response.ok) {
@@ -24,16 +28,16 @@ export default function ProjectsPage() {
         if (!data.projects || !Array.isArray(data.projects)) {
           throw new Error('Invalid data structure: projects array is missing or invalid');
         }
-        setProfileData(data);
+        setProjectsData(data);
       } catch (error) {
-        console.error('プロフィールデータの読み込みに失敗しました:', error);
+        console.error('プロジェクトデータの読み込みに失敗しました:', error);
         setError(error instanceof Error ? error.message : '不明なエラーが発生しました');
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProfileData();
+    fetchProjectsData();
   }, []);
 
   if (isLoading) {
@@ -52,7 +56,7 @@ export default function ProjectsPage() {
     );
   }
 
-  if (!profileData?.projects) {
+  if (!projectsData?.projects) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-xl text-red-500">データの読み込みに失敗しました</div>
@@ -60,7 +64,7 @@ export default function ProjectsPage() {
     );
   }
 
-  const { projects } = profileData;
+  const { projects } = projectsData;
 
   // プロジェクトを時系列の逆順でソート
   const sortedProjects = [...projects].sort((a, b) => {
