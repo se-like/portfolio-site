@@ -6,7 +6,6 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import ContactForm, { FormData } from '@/components/contact/ContactForm';
 import ContactInfo from '@/components/contact/ContactInfo';
 import ContactServices from '@/components/contact/ContactServices';
-import SocialLinks from '@/components/contact/SocialLinks';
 import { useProfileData } from '@/hooks/useProfileData';
 
 export default function ContactSection() {
@@ -57,35 +56,29 @@ export default function ContactSection() {
   }
 
   return (
-    <>
-      <Section bgColor="light" id="contact">
-        <SectionHeading
-          title="お問い合わせ"
-          subtitle="プロジェクトのご相談やお問い合わせはこちらから"
-          centered
-        />
+    <Section bgColor="light" id="contact">
+      <SectionHeading
+        title="お問い合わせ"
+        subtitle="プロジェクトのご相談やお問い合わせはこちらから"
+        centered
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
-          <div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-              <ContactForm
-                onSubmit={handleSubmit}
-                isSubmitting={isSubmitting}
-                submitStatus={submitStatus}
-              />
-            </div>
-          </div>
-          
-          <div>
-            <ContactInfo profileData={profileData} />
-            <ContactServices />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+        <div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+            <ContactForm
+              onSubmit={handleSubmit}
+              isSubmitting={isSubmitting}
+              submitStatus={submitStatus}
+            />
           </div>
         </div>
-      </Section>
-      
-      <Section bgColor="light">
-        <SocialLinks profileData={profileData} />
-      </Section>
-    </>
+        
+        <div>
+          <ContactInfo profileData={profileData} />
+          <ContactServices />
+        </div>
+      </div>
+    </Section>
   );
 }
