@@ -95,7 +95,7 @@ export default function ProjectsPage() {
 
   return (
     <Section bgColor="light">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
           プロジェクト一覧
         </h1>
