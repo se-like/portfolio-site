@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Project, ProjectFilter, getPhaseColor } from '@/types/project';
 import ProjectFilters from '@/components/projects/ProjectFilters';
@@ -95,131 +94,117 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-        プロジェクト一覧
-      </h1>
+    <Section bgColor="light">
+      <div className="container mx-auto px-4">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          プロジェクト一覧
+        </h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* フィルター */}
-        <div className="lg:col-span-1">
-          <ProjectFilters
-            filters={filters}
-            onFilterChange={setFilters}
-            availableTechnologies={availableTechnologies}
-            availablePhases={availablePhases}
-            availableRoles={availableRoles}
-          />
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* フィルター */}
+          <div className="lg:col-span-1">
+            <ProjectFilters
+              filters={filters}
+              onFilterChange={setFilters}
+              availableTechnologies={availableTechnologies}
+              availablePhases={availablePhases}
+              availableRoles={availableRoles}
+            />
+          </div>
 
-        {/* プロジェクト一覧 */}
-        <div className="lg:col-span-3">
-          {filteredProjects.length === 0 ? (
-            <div className="text-center text-gray-500 dark:text-gray-400 py-8">
-              条件に一致するプロジェクトが見つかりませんでした
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden flex flex-col"
-                >
-                  <div className="relative min-h-[200px] w-full">
-                    {project.imageUrl ? (
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={project.imageUrl}
-                          alt={project.title}
-                          fill
-                          className="object-contain"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600" />
-                    )}
-                  </div>
-
-                  <div className="p-6 flex-grow">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 break-words">
+          {/* プロジェクト一覧 */}
+          <div className="lg:col-span-3">
+            {filteredProjects.length === 0 ? (
+              <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+                条件に一致するプロジェクトが見つかりませんでした
+              </div>
+            ) : (
+              <div className="space-y-8">
+                {filteredProjects.map((project, index) => (
+                  <div
+                    key={index}
+                    className="bg-white dark:bg-gray-800 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] p-8 w-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all duration-300 border border-gray-200 dark:border-gray-700"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
                       {project.title}
                     </h3>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded">
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-sm font-medium rounded-full">
                         {project.period}
                       </span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs font-medium rounded">
+                      <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 text-sm font-medium rounded-full">
                         {project.role}
                       </span>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg leading-relaxed">
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.technologies?.map((tech: string, techIndex: number) => (
                         <span
                           key={techIndex}
-                          className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded"
+                          className="px-3 py-1 bg-gray-100 dark:bg-gray-700/50 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-full"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-8">
                       {project.phases.map((phase: string, phaseIndex: number) => (
                         <span
                           key={phaseIndex}
-                          className={`px-2 py-1 text-xs font-medium rounded bg-gradient-to-r ${getPhaseColor(phase)} text-white`}
+                          className={`px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r ${getPhaseColor(phase)} text-white shadow-sm`}
                         >
                           {phase}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-4">
                       {project.projectUrl && (
                         <Link href={project.projectUrl}>
-                          <Button size="sm">プロジェクトを見る</Button>
+                          <Button size="sm" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                            プロジェクトを見る
+                          </Button>
                         </Link>
                       )}
                       {project.githubUrl && (
                         <Link href={project.githubUrl}>
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="sm" className="border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 shadow-lg hover:shadow-xl transition-all duration-300">
                             GitHub
                           </Button>
                         </Link>
                       )}
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <Section bgColor="light">
-        <SectionHeading 
-          title="お問い合わせ"
-          subtitle="新規プロジェクトのご相談やお問い合わせはこちらから"
-          centered
-        />
-        
-        <div className="mt-8 text-center">
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            新しいプロジェクトのご相談、技術的なお問い合わせ、お見積りのご依頼など、お気軽にご連絡ください。
-          </p>
+        <Section bgColor="light">
+          <SectionHeading 
+            title="お問い合わせ"
+            subtitle="新規プロジェクトのご相談やお問い合わせはこちらから"
+            centered
+          />
           
-          <Link href="/contact">
-            <Button size="lg">
-            お問い合わせページへ
-          </Button>
-          </Link>
-        </div>
-      </Section>
-    </div>
+          <div className="mt-8 text-center">
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+              新しいプロジェクトのご相談、技術的なお問い合わせ、お見積りのご依頼など、お気軽にご連絡ください。
+            </p>
+            
+            <Link href="/contact">
+              <Button size="lg">
+              お問い合わせページへ
+            </Button>
+            </Link>
+          </div>
+        </Section>
+      </div>
+    </Section>
   );
 }
