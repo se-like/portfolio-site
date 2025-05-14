@@ -12,6 +12,7 @@ export default function ContactForm({
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
+    company: '',
     subject: '',
     message: '',
   });
@@ -62,6 +63,23 @@ export default function ContactForm({
           value={formData.email}
           onChange={handleChange}
           required
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="company"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+          会社名
+        </label>
+        <input
+          type="text"
+          id="company"
+          name="company"
+          value={formData.company}
+          onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
       </div>

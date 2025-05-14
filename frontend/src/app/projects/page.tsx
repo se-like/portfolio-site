@@ -5,7 +5,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ProjectsData } from '@/types/project';
+import { ProjectsData, getPhaseColor } from '@/types/project';
 
 export default function ProjectsPage() {
   const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
@@ -158,32 +158,20 @@ export default function ProjectsPage() {
                     担当フェーズ
                   </h3>
                   <div className="flex flex-wrap gap-3">
-                    {project.phases.map((phase, phaseIndex) => {
-                      // フェーズの種類に応じて色を変更
-                      const getPhaseColor = (phase: string) => {
-                        if (phase.includes('要件')) return 'from-orange-500 to-orange-600';
-                        if (phase.includes('設計')) return 'from-blue-500 to-blue-600';
-                        if (phase.includes('実装')) return 'from-green-500 to-green-600';
-                        if (phase.includes('テスト')) return 'from-purple-500 to-purple-600';
-                        if (phase.includes('保守')) return 'from-pink-500 to-pink-600';
-                        return 'from-gray-500 to-gray-600';
-                      };
-
-                      return (
-                        <div 
-                          key={phaseIndex}
-                          className="relative group"
+                    {project.phases.map((phase, phaseIndex) => (
+                      <div 
+                        key={phaseIndex}
+                        className="relative group"
+                      >
+                        <span 
+                          className={`px-4 py-2 bg-gradient-to-r ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105`}
                         >
-                          <span 
-                            className={`px-4 py-2 bg-gradient-to-r ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105`}
-                          >
-                            {phase}
-                            <span className="ml-2 text-xs opacity-75">→</span>
-                          </span>
-                          <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                      );
-                    })}
+                          {phase}
+                          <span className="ml-2 text-xs opacity-75">→</span>
+                        </span>
+                        <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

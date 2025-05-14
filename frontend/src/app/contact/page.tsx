@@ -5,10 +5,11 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import { ProfileData } from '@/types/profile';
+import { FormData } from '@/types/contact';
 
 export default function ContactPage() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     company: '',

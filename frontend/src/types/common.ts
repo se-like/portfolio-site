@@ -24,4 +24,8 @@ export interface ButtonProps extends BaseProps {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   children: React.ReactNode;
+}
+
+export interface LayoutProps {
+  children: React.ReactNode;
 } 
