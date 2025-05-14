@@ -5,11 +5,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { CareerProject } from '@/types/profile';
-
-interface ProjectsData {
-  projects: CareerProject[];
-}
+import { ProjectsData } from '@/types/project';
 
 export default function ProjectsPage() {
   const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);

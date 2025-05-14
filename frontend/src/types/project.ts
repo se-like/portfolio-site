@@ -17,4 +17,8 @@ export interface Project {
 
 export interface ProjectList {
   projects: Project[];
+}
+
+export interface ProjectsData {
+  projects: Project[];
 } 
