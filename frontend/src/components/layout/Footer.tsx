@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ProfileData } from './types';
+import { ProfileData } from '@/types/profile';
 import FooterProfile from './FooterProfile';
 import FooterNavigation from './FooterNavigation';
 import FooterContact from './FooterContact';

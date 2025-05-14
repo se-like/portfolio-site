@@ -6,6 +6,16 @@ export interface ProfileData {
   gender: string;
   qualifications: string[];
   education: string;
+  career: {
+    company: string;
+    period: string;
+    role: string;
+    description: string;
+  }[];
+  interests: string[];
+  email: string;
+  phone: string;
+  github: string;
   available_from: string;
   station: string;
   specialties: {
@@ -14,9 +24,6 @@ export interface ProfileData {
     role: string;
   };
   pr: string;
-  github: string;
-  email: string;
-  phone: string;
   projects: Project[];
 }
 

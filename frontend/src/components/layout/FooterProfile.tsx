@@ -1,4 +1,4 @@
-import { ProfileData } from './types';
+import { ProfileData } from '@/types/profile';
 
 interface FooterProfileProps {
   profileData: ProfileData | null;
