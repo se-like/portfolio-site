@@ -4,12 +4,11 @@ export interface Project {
   role: string;
   team_size?: number;
   description: string;
-  languages: string[];
-  db: string;
-  os: string;
-  tools: string[];
+  technologies: string[];
+  db?: string;
+  os?: string;
+  tools?: string[];
   phases: string[];
-  technologies?: string[];
   imageUrl?: string;
   projectUrl?: string;
   githubUrl?: string;
@@ -32,4 +31,18 @@ export const getPhaseColor = (phase: string): PhaseColor => {
   if (phase.includes('テスト')) return 'from-purple-500 to-purple-600';
   if (phase.includes('保守')) return 'from-pink-500 to-pink-600';
   return 'from-gray-500 to-gray-600';
-}; 
+};
+
+export interface ProjectFilter {
+  technologies: string[];
+  phases: string[];
+  roles: string[];
+}
+
+export interface ProjectFiltersProps {
+  filters: ProjectFilter;
+  onFilterChange: (filters: ProjectFilter) => void;
+  availableTechnologies: string[];
+  availablePhases: string[];
+  availableRoles: string[];
+} 

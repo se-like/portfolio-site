@@ -180,12 +180,12 @@ export default function AboutPage() {
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {project.languages.map((lang: string, langIndex: number) => (
+                      {project.technologies.map((tech: string, techIndex: number) => (
                         <span 
-                          key={langIndex}
+                          key={techIndex}
                           className="px-2 py-1 text-xs font-medium text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-full"
                         >
-                          {lang}
+                          {tech}
                         </span>
                       ))}
                     </div>
