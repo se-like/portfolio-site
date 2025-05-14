@@ -4,35 +4,7 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
-interface Project {
-  period: string;
-  title: string;
-  role: string;
-  team_size?: number;
-  description: string;
-  languages: string[];
-}
-
-interface ProfileData {
-  name: string;
-  age: number;
-  gender: string;
-  qualifications: string[];
-  education: string;
-  available_from: string;
-  station: string;
-  specialties: {
-    business: string;
-    technology: string[];
-    role: string;
-  };
-  pr: string;
-  github: string;
-  email: string;
-  phone: string;
-  projects: Project[];
-}
+import { ProfileData } from '@/types/profile';
 
 export default function AboutPage() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);

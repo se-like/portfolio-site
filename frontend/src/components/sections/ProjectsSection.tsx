@@ -5,15 +5,7 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
-
-interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  imageUrl?: string;
-  projectUrl?: string;
-  githubUrl?: string;
-}
+import { Project } from '@/types/project';
 
 export default function ProjectsSection() {
   const projects: Project[] = [
@@ -109,15 +101,15 @@ export default function ProjectsSection() {
                 {project.projectUrl && (
                   <Link href={project.projectUrl}>
                     <Button size="sm">
-                      プロジェクトを見る
-                    </Button>
+                    プロジェクトを見る
+                  </Button>
                   </Link>
                 )}
                 {project.githubUrl && (
                   <Link href={project.githubUrl}>
                     <Button variant="outline" size="sm">
-                      GitHub
-                    </Button>
+                    GitHub
+                  </Button>
                   </Link>
                 )}
               </div>
@@ -129,8 +121,8 @@ export default function ProjectsSection() {
       <div className="mt-12 text-center">
         <Link href="/projects">
           <Button variant="secondary" className="hover-lift">
-            すべてのプロジェクトを見る
-          </Button>
+          すべてのプロジェクトを見る
+        </Button>
         </Link>
       </div>
     </Section>
