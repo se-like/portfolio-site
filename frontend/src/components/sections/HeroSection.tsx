@@ -23,13 +23,13 @@ export default function HeroSection() {
             <div className={styles.buttonContainer}>
               <Link href="/projects">
                 <Button variant="gradient" size="lg">
-                  プロジェクト実績
-                </Button>
+                プロジェクト実績
+              </Button>
               </Link>
               <Link href="/contact">
                 <Button variant="outline" size="lg">
-                  お問い合わせ
-                </Button>
+                お問い合わせ
+              </Button>
               </Link>
             </div>
           </div>

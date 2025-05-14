@@ -111,6 +111,14 @@ export default function ProjectsSection() {
             </div>
             
             <div className="p-6">
+              <div className="flex flex-wrap gap-2 mb-3">
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded">
+                  {project.period}
+                </span>
+                <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs font-medium rounded">
+                  {project.role}
+                </span>
+              </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {project.title}
               </h3>

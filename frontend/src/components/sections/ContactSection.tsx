@@ -12,7 +12,7 @@ export default function ContactSection() {
   const { profileData, isLoading, isError } = useProfileData();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
+  
   const handleSubmit = async (formData: FormData) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -29,7 +29,7 @@ export default function ContactSection() {
       if (!response.ok) {
         throw new Error('送信に失敗しました');
       }
-
+      
       setSubmitStatus('success');
     } catch (error) {
       console.error('送信エラー:', error);
@@ -53,28 +53,28 @@ export default function ContactSection() {
         <div className="text-center text-red-500">データの読み込みに失敗しました</div>
       </Section>
     );
-  }
-
+    }
+  
   return (
     <Section bgColor="light" id="contact">
-      <SectionHeading
+      <SectionHeading 
         title="お問い合わせ"
         subtitle="プロジェクトのご相談やお問い合わせはこちらから"
         centered
       />
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
         <div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
             <ContactForm
               onSubmit={handleSubmit}
               isSubmitting={isSubmitting}
               submitStatus={submitStatus}
-            />
-          </div>
-        </div>
-        
-        <div>
+                  />
+                </div>
+                </div>
+                
+                <div>
           <ContactInfo profileData={profileData} />
           <ContactServices />
         </div>
