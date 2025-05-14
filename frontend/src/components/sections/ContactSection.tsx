@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import ContactForm, { FormData } from '@/components/contact/ContactForm';
+import ContactForm from '@/components/contact/ContactForm';
 import ContactInfo from '@/components/contact/ContactInfo';
 import ContactServices from '@/components/contact/ContactServices';
 import { useProfileData } from '@/hooks/useProfileData';
+import { FormData } from '@/types/contact';
 
 export default function ContactSection() {
   const { profileData, isLoading, isError } = useProfileData();

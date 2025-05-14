@@ -2,19 +2,7 @@
 
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
-
-export interface FormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-interface ContactFormProps {
-  onSubmit: (formData: FormData) => Promise<void>;
-  isSubmitting: boolean;
-  submitStatus: 'idle' | 'success' | 'error';
-}
+import { FormData, ContactFormProps } from '@/types/contact';
 
 export default function ContactForm({
   onSubmit,

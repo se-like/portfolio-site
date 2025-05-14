@@ -1,10 +1,6 @@
 'use client';
 
-import { ProfileData } from '@/components/layout/types';
-
-interface ContactInfoProps {
-  profileData: ProfileData | null;
-}
+import { ContactInfoProps } from '@/types/contact';
 
 export default function ContactInfo({ profileData }: ContactInfoProps) {
   return (

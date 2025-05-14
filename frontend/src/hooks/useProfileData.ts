@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ProfileData } from '@/components/layout/types';
+import { ProfileData } from '@/types/profile';
 
 export function useProfileData() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);

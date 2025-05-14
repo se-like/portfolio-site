@@ -1,10 +1,6 @@
 'use client';
 
-import { ProfileData } from '@/components/layout/types';
-
-interface SocialLinksProps {
-  profileData: ProfileData;
-}
+import { SocialLinksProps } from '@/types/contact';
 
 export default function SocialLinks({ profileData }: SocialLinksProps) {
   return (
