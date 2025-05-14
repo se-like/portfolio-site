@@ -123,16 +123,16 @@ export default function ProjectsPage() {
                 {filteredProjects.map((project, index) => (
                   <div
                     key={index}
-                    className="bg-white dark:bg-gray-800 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] p-8 w-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all duration-300 border border-gray-200 dark:border-gray-700"
+                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg dark:shadow-gray-900/50 p-8 w-full hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300 border border-gray-200 dark:border-gray-700"
                   >
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
                       {project.title}
                     </h3>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-sm font-medium rounded-full">
+                      <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-sm">
                         {project.period}
                       </span>
-                      <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 text-sm font-medium rounded-full">
+                      <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-medium rounded-full shadow-sm">
                         {project.role}
                       </span>
                     </div>
@@ -144,21 +144,27 @@ export default function ProjectsPage() {
                       {project.technologies?.map((tech: string, techIndex: number) => (
                         <span
                           key={techIndex}
-                          className="px-3 py-1 bg-gray-100 dark:bg-gray-700/50 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-full"
+                          className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-800 dark:text-gray-200 text-sm font-medium rounded-full shadow-sm"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-8">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {project.phases.map((phase: string, phaseIndex: number) => (
-                        <span
+                        <div
                           key={phaseIndex}
-                          className={`px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r ${getPhaseColor(phase)} text-white shadow-sm`}
+                          className="relative group"
                         >
-                          {phase}
-                        </span>
+                          <span
+                            className={`px-4 py-2 ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105 hover:shadow-lg`}
+                          >
+                            {phase}
+                            <span className="ml-2 text-xs opacity-75">→</span>
+                          </span>
+                          <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
                       ))}
                     </div>
 
