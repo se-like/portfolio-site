@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { MainLayoutProps } from '@/types/common';
 import Header from './Header';
 import Footer from './Footer';
-
-interface MainLayoutProps {
-  children: ReactNode;
-}
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (

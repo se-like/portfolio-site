@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'gradient';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -27,5 +29,9 @@ export interface ButtonProps extends BaseProps {
 }
 
 export interface LayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
+}
+
+export interface MainLayoutProps {
+  children: ReactNode;
 } 
