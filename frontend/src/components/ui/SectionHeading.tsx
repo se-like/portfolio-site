@@ -1,22 +1,20 @@
-import { SectionHeadingProps } from '@/types/section-heading';
+import { SectionHeadingProps } from '@/types/common';
 
 export default function SectionHeading({
   title,
   subtitle,
   centered = false,
-  className = ''
+  className = '',
+  id,
 }: SectionHeadingProps) {
   return (
-    <div className={`mb-12 ${centered ? 'text-center' : ''} ${className}`}>
-      <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 gradient-primary text-gradient">
+    <div className={`mb-8 ${centered ? 'text-center' : ''} ${className}`} id={id}>
+      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-          {subtitle}
-        </p>
+        <p className="text-lg text-gray-600 dark:text-gray-300">{subtitle}</p>
       )}
-      <div className={`h-1 w-20 mt-6 rounded-full gradient-primary ${centered ? 'mx-auto' : ''}`}></div>
     </div>
   );
 }

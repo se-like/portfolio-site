@@ -1,23 +1,19 @@
-import { SectionProps } from '@/types/section';
+import { SectionProps } from '@/types/common';
 
 export default function Section({ 
   children, 
-  className = '', 
+  bgColor = 'white',
+  className = '',
   id,
-  bgColor = 'white'
 }: SectionProps) {
-  const bgColorClasses = {
-    white: 'bg-white dark:bg-gray-900',
-    light: 'bg-gray-50 dark:bg-gray-800',
-    dark: 'bg-gray-900 dark:bg-black text-white'
-  };
-
+  const bgColorClass = bgColor === 'light' ? 'bg-gray-50 dark:bg-gray-900' : 'bg-white dark:bg-gray-800';
+  
   return (
     <section 
+      className={`py-16 ${bgColorClass} ${className}`}
       id={id}
-      className={`py-16 md:py-24 ${bgColorClasses[bgColor]} ${className}`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4">
         {children}
       </div>
     </section>

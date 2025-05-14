@@ -25,17 +25,4 @@ export interface ProfileData {
   };
   pr: string;
   projects: Project[];
-}
-
-export interface CareerProject {
-  period: string;
-  title: string;
-  role: string;
-  team_size?: number;
-  description: string;
-  languages: string[];
-  db: string;
-  os: string;
-  tools: string[];
-  phases: string[];
 } 
