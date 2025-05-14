@@ -3,6 +3,7 @@
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface Project {
@@ -232,9 +233,11 @@ export default function ProjectsPage() {
             新しいプロジェクトのご相談、技術的なお問い合わせ、お見積りのご依頼など、お気軽にご連絡ください。
           </p>
           
-          <Button href="/contact" size="lg">
-            お問い合わせページへ
-          </Button>
+          <Link href="/contact">
+            <Button size="lg">
+              お問い合わせページへ
+            </Button>
+          </Link>
         </div>
       </Section>
     </>
