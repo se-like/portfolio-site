@@ -1,3 +1,14 @@
+/**
+ * ソーシャルリンクコンポーネント
+ * 
+ * このコンポーネントは以下の機能を提供します：
+ * - ソーシャルメディアプロフィールへのリンク表示
+ * - アイコンによる視覚的な表現
+ * - ホバー時の色変更
+ * - ダークモード対応
+ * - 外部リンクのセキュリティ対策（noopener, noreferrer）
+ */
+
 'use client';
 
 import { SocialLinksProps } from '@/types/contact';
@@ -5,10 +16,14 @@ import { SocialLinksProps } from '@/types/contact';
 export default function SocialLinks({ profileData }: SocialLinksProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+      {/* セクションタイトル */}
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         ソーシャルリンク
       </h3>
+      
+      {/* ソーシャルリンクリスト */}
       <div className="space-y-4">
+        {/* GitHubリンク（プロフィールデータがある場合のみ表示） */}
         {profileData.github && (
           <a
             href={profileData.github}
@@ -31,6 +46,8 @@ export default function SocialLinks({ profileData }: SocialLinksProps) {
             GitHub
           </a>
         )}
+        
+        {/* LinkedInリンク */}
         <a
           href="https://www.linkedin.com/in/koji-morita-8b369294"
           target="_blank"
@@ -47,6 +64,8 @@ export default function SocialLinks({ profileData }: SocialLinksProps) {
           </svg>
           LinkedIn
         </a>
+        
+        {/* X（旧Twitter）リンク */}
         <a
           href="https://x.com/SE_LIKE"
           target="_blank"

@@ -1,3 +1,15 @@
+/**
+ * プロジェクトセクションコンポーネント
+ * 
+ * このコンポーネントは以下の機能を提供します：
+ * - プロジェクト一覧の表示
+ * - レスポンシブなグリッドレイアウト
+ * - プロジェクト画像の最適化表示
+ * - 画像読み込み失敗時のフォールバック表示
+ * - 技術スタックのタグ表示
+ * - プロジェクト詳細へのリンク
+ */
+
 'use client';
 
 import Image from 'next/image';
@@ -8,6 +20,7 @@ import Link from 'next/link';
 import { Project } from '@/types/project';
 
 export default function ProjectsSection() {
+  // プロジェクトデータの定義
   const projects: Project[] = [
     {
       title: 'IoTデータ見える化システム',
@@ -69,15 +82,18 @@ export default function ProjectsSection() {
 
   return (
     <Section id="projects" className="section">
+      {/* セクション見出し */}
       <SectionHeading 
         title="プロジェクト実績"
         subtitle="これまでに手がけた主要なプロジェクト"
         centered
       />
       
+      {/* プロジェクトカードのグリッド */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
         {projects.map((project, index) => (
           <div key={index} className="project-card card-hover">
+            {/* プロジェクト画像 */}
             <div className="project-image-container">
               {project.imageUrl ? (
                 <Image 
@@ -87,12 +103,12 @@ export default function ProjectsSection() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="project-image"
                   onError={(e) => {
-                    // Fallback to gradient background if image fails to load
+                    // 画像読み込み失敗時のフォールバック処理
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
                     target.parentElement?.classList.add('gradient-primary', 'flex', 'items-center', 'justify-center');
                     
-                    // Add title text
+                    // タイトルテキストの追加
                     const titleSpan = document.createElement('span');
                     titleSpan.className = 'text-white text-2xl font-bold';
                     titleSpan.textContent = project.title;
@@ -100,13 +116,16 @@ export default function ProjectsSection() {
                   }}
                 />
               ) : (
+                // 画像がない場合のフォールバック表示
                 <div className="absolute inset-0 gradient-primary flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">{project.title}</span>
                 </div>
               )}
             </div>
             
+            {/* プロジェクト詳細情報 */}
             <div className="p-6">
+              {/* 期間と役割のタグ */}
               <div className="flex flex-wrap gap-2 mb-3">
                 <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded">
                   {project.period}
@@ -115,6 +134,8 @@ export default function ProjectsSection() {
                   {project.role}
                 </span>
               </div>
+
+              {/* プロジェクトタイトルと説明 */}
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {project.title}
               </h3>
@@ -122,6 +143,7 @@ export default function ProjectsSection() {
                 {project.description}
               </p>
               
+              {/* 使用技術のタグ */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.technologies?.map((tech, techIndex) => (
                   <span 
@@ -133,6 +155,7 @@ export default function ProjectsSection() {
                 ))}
               </div>
               
+              {/* プロジェクトリンクボタン */}
               <div className="flex space-x-3 mt-4">
                 {project.projectUrl && (
                   <Link href={project.projectUrl}>
@@ -154,6 +177,7 @@ export default function ProjectsSection() {
         ))}
       </div>
       
+      {/* 全プロジェクト表示へのリンク */}
       <div className="mt-12 text-center">
         <Link href="/projects">
           <Button variant="secondary" className="hover-lift">

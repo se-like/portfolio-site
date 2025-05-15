@@ -1,8 +1,19 @@
+/**
+ * スキルセクションコンポーネント
+ * 
+ * このコンポーネントは以下の機能を提供します：
+ * - スキルカテゴリー別の表示
+ * - スキルレベルの視覚化（プログレスバー）
+ * - レスポンシブなグリッドレイアウト
+ * - アイコンによる視覚的な表現
+ */
+
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { SkillCategory } from '@/types/skill';
 
 export default function SkillsSection() {
+  // スキルカテゴリーとスキルデータの定義
   const skillCategories: SkillCategory[] = [
     {
       title: 'プログラミング言語',
@@ -52,21 +63,26 @@ export default function SkillsSection() {
   return (
     <Section bgColor="white" id="skills">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* セクション見出し */}
         <SectionHeading 
           title="スキル・技術"
           subtitle="長年の経験を通じて習得した技術スタックとスキルセット"
           centered
         />
         
+        {/* スキルカテゴリーのグリッド */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
           {skillCategories.map((category, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              {/* カテゴリータイトル */}
               <h3 className="text-xl font-bold text-gray-900 mb-6">
                 {category.title}
               </h3>
+              {/* スキルリスト */}
               <div className="space-y-6">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
+                    {/* スキル名とレベル表示 */}
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
                         <span className="mr-3 text-2xl">{skill.icon}</span>
@@ -74,6 +90,7 @@ export default function SkillsSection() {
                       </div>
                       <span className="text-sm text-gray-600">{skill.level}%</span>
                     </div>
+                    {/* スキルレベルのプログレスバー */}
                     <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div 
                         className="h-full bg-blue-600 rounded-full" 

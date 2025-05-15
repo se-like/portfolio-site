@@ -1,3 +1,15 @@
+/**
+ * お問い合わせフォームコンポーネント
+ * 
+ * このコンポーネントは以下の機能を提供します：
+ * - フォーム入力フィールド（名前、メール、会社名、件名、メッセージ）
+ * - フォーム送信状態の管理
+ * - バリデーション（必須フィールド）
+ * - 送信成功/エラー時のフィードバック表示
+ * - ダークモード対応
+ * - レスポンシブデザイン
+ */
+
 'use client';
 
 import { useState } from 'react';
@@ -9,6 +21,7 @@ export default function ContactForm({
   isSubmitting,
   submitStatus,
 }: ContactFormProps) {
+  // フォームデータの状態管理
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -17,11 +30,19 @@ export default function ContactForm({
     message: '',
   });
 
+  /**
+   * フォーム送信ハンドラー
+   * @param e - フォームイベント
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit(formData);
   };
 
+  /**
+   * 入力フィールド変更ハンドラー
+   * @param e - 入力イベント
+   */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -31,6 +52,7 @@ export default function ContactForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* 名前入力フィールド */}
       <div>
         <label
           htmlFor="name"
@@ -49,6 +71,7 @@ export default function ContactForm({
         />
       </div>
 
+      {/* メールアドレス入力フィールド */}
       <div>
         <label
           htmlFor="email"
@@ -67,6 +90,7 @@ export default function ContactForm({
         />
       </div>
 
+      {/* 会社名入力フィールド */}
       <div>
         <label
           htmlFor="company"
@@ -84,6 +108,7 @@ export default function ContactForm({
         />
       </div>
 
+      {/* 件名入力フィールド */}
       <div>
         <label
           htmlFor="subject"
@@ -102,6 +127,7 @@ export default function ContactForm({
         />
       </div>
 
+      {/* メッセージ入力フィールド */}
       <div>
         <label
           htmlFor="message"
@@ -120,6 +146,7 @@ export default function ContactForm({
         />
       </div>
 
+      {/* 送信ボタン */}
       <div className="flex justify-end">
         <Button
           type="submit"
@@ -130,12 +157,14 @@ export default function ContactForm({
         </Button>
       </div>
 
+      {/* 送信成功メッセージ */}
       {submitStatus === 'success' && (
         <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-md">
           メッセージを送信しました。ありがとうございます。
         </div>
       )}
 
+      {/* エラーメッセージ */}
       {submitStatus === 'error' && (
         <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-md">
           送信に失敗しました。もう一度お試しください。

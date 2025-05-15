@@ -1,3 +1,14 @@
+/**
+ * 連絡先情報コンポーネント
+ * 
+ * このコンポーネントは以下の機能を提供します：
+ * - プロフィールデータに基づく連絡先情報の表示
+ * - メールアドレスのクリック可能なリンク
+ * - GitHubプロフィールへのリンク
+ * - アイコンによる視覚的な表現
+ * - ダークモード対応
+ */
+
 'use client';
 
 import { ContactInfoProps } from '@/types/contact';
@@ -5,11 +16,14 @@ import { ContactInfoProps } from '@/types/contact';
 export default function ContactInfo({ profileData }: ContactInfoProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
+      {/* セクションタイトル */}
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
         連絡先情報
       </h3>
       
+      {/* 連絡先情報のリスト */}
       <div className="space-y-4">
+        {/* メールアドレス情報 */}
         <div className="flex items-start">
           <div className="flex-shrink-0 mt-1">
             <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,6 +43,7 @@ export default function ContactInfo({ profileData }: ContactInfoProps) {
           </div>
         </div>
 
+        {/* GitHubプロフィール情報 */}
         <div className="flex items-start">
           <div className="flex-shrink-0 mt-1">
             <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
