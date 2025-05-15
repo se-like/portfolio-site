@@ -70,12 +70,20 @@ export default function AboutPage() {
               <p>
                 {profileData.pr}
               </p>
-              <div className="mt-4">
-                <p className="flex items-center mb-2 w-full">
-                  <span className="font-medium w-24">稼働開始可能時期:</span>
+              <div className="mt-4 space-y-2">
+                <p className="flex items-center">
+                  <span className="font-medium w-24">学歴:</span>
+                  {profileData.education}
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">最寄駅:</span>
+                  {profileData.station}
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-40">稼働開始可能時期:</span>
                   {profileData.available_from}
                 </p>
-                <p className="flex items-center mb-2 w-full">
+                <p className="flex items-center">
                   <span className="font-medium w-24">GitHub:</span>
                   <a 
                     href={profileData.github}
@@ -86,13 +94,22 @@ export default function AboutPage() {
                     {profileData.github.replace('https://', '')}
                   </a>
                 </p>
-                <p className="flex items-center w-full">
+                <p className="flex items-center">
                   <span className="font-medium w-24">メール:</span>
                   <a 
                     href={`mailto:${profileData.email}`}
                     className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
                     {profileData.email}
+                  </a>
+                </p>
+                <p className="flex items-center">
+                  <span className="font-medium w-24">電話:</span>
+                  <a 
+                    href={`tel:${profileData.phone.replace(/-/g, '')}`}
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {profileData.phone}
                   </a>
                 </p>
               </div>

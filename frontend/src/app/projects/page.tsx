@@ -158,7 +158,7 @@ export default function ProjectsPage() {
                           className="relative group"
                         >
                           <span
-                            className={`px-4 py-2 !bg-gradient-to-br ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105`}
+                            className={`px-4 py-2 bg-gradient-to-br ${getPhaseColor(phase)} text-white text-sm font-medium rounded-lg shadow-sm flex items-center transition-all duration-300 group-hover:scale-105`}
                           >
                             {phase}
                             <span className="ml-2 text-xs opacity-75">→</span>
