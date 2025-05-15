@@ -18,6 +18,17 @@ export const metadata: Metadata = {
   title: "SE Portfolio | Freelance System Engineer",
   description: "Portfolio website for a freelance system engineer showcasing skills, projects, and professional experience.",
   keywords: ["system engineer", "freelance", "web development", "portfolio", "React", "Next.js", "Ruby on Rails"],
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/icon.png', type: 'image/png' }
+    ],
+    shortcut: [
+      { url: '/icon.png', type: 'image/png' }
+    ]
+  },
 };
 
 export default function RootLayout({
