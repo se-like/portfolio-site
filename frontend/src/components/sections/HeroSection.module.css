@@ -9,7 +9,7 @@
   position: absolute;
   inset: 0;
   background: url('/images/pattern.svg');
-  opacity: 0.05;
+  opacity: 0.02;
   z-index: 1;
 }
 
