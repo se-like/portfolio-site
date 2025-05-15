@@ -41,7 +41,7 @@ export default function HeroSection() {
               
               {/* Actual profile image */}
               <Image 
-                src="/images/profile/profile-hero.jpg" 
+                src="/profile-new.jpeg" 
                 alt="フリーランスシステムエンジニア" 
                 fill 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

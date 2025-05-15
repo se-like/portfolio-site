@@ -119,7 +119,7 @@ export default function AboutPage() {
               {/* Profile image */}
               <div className="relative w-full h-full">
                 <Image 
-                  src="/images/profile/profile.jpg" 
+                  src="/profile-new.jpeg" 
                   alt="プロフィール写真" 
                   fill 
                   className="object-cover"
