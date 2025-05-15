@@ -11,7 +11,7 @@ export function useProfileData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/profile.json');
+        const response = await fetch('/projects.json');
         if (!response.ok) {
           throw new Error('プロフィールデータの取得に失敗しました');
         }
