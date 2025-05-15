@@ -28,7 +28,8 @@ export default function ContactSection() {
       });
 
       if (!response.ok) {
-        throw new Error('送信に失敗しました');
+        const data = await response.json();
+        throw new Error(data.error || '送信に失敗しました');
       }
       
       setSubmitStatus('success');
