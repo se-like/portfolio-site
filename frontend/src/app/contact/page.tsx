@@ -1,76 +1,71 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import Button from '@/components/ui/Button';
-import { ProfileData } from '@/types/profile';
+import ContactForm from '@/components/contact/ContactForm';
+import ContactInfo from '@/components/contact/ContactInfo';
+import ContactServices from '@/components/contact/ContactServices';
+import { useProfileData } from '@/hooks/useProfileData';
 import { FormData } from '@/types/contact';
 
 export default function ContactPage() {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    company: '',
-    subject: '',
-    message: ''
-  });
+  // プロフィールデータの取得
+  const { profileData, isLoading, isError } = useProfileData();
   
+  // フォーム送信状態の管理
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await fetch('/projects.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setProfileData(data);
-      } catch (error) {
-        console.error('プロフィールデータの読み込みに失敗しました:', error);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  /**
+   * フォーム送信ハンドラー
+   * @param formData - 送信するフォームデータ
+   */
+  const handleSubmit = async (formData: FormData) => {
     setIsSubmitting(true);
-    
+    setSubmitStatus('idle');
+
     try {
-      // In a real application, this would be an API call to the backend
-      // For now, we'll simulate a successful submission after a delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        subject: '',
-        message: ''
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || '送信に失敗しました');
+      }
       
       setSubmitStatus('success');
-    } catch {
+    } catch (error) {
+      console.error('送信エラー:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
+  // ローディング状態の表示
+  if (isLoading) {
+    return (
+      <Section>
+        <div className="text-center">読み込み中...</div>
+      </Section>
+    );
+  }
+
+  // エラー状態の表示
+  if (isError || !profileData) {
+    return (
+      <Section>
+        <div className="text-center text-red-500">データの読み込みに失敗しました</div>
+      </Section>
+    );
+  }
+
   return (
     <>
       <Section>
@@ -80,206 +75,21 @@ export default function ContactPage() {
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+          {/* 左側：お問い合わせフォーム */}
           <div>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-              {submitStatus === 'success' ? (
-                <div className="text-center py-8">
-                  <div className="text-green-500 mb-4">
-                    <svg className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    お問い合わせありがとうございます
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    内容を確認次第、折り返しご連絡いたします。
-                  </p>
-                  <Button 
-                    onClick={() => setSubmitStatus('idle')}
-                    variant="secondary"
-                  >
-                    新しいお問い合わせ
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 gap-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        お名前 <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        メールアドレス <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        会社名
-                      </label>
-                      <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        お問い合わせ内容 <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      >
-                        <option value="">選択してください</option>
-                        <option value="project">プロジェクトの相談</option>
-                        <option value="quote">お見積り依頼</option>
-                        <option value="question">技術的な質問</option>
-                        <option value="other">その他</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        メッセージ <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={5}
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      ></textarea>
-                    </div>
-                    
-                    <div>
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? '送信中...' : '送信する'}
-                      </Button>
-                      
-                      {submitStatus === 'error' && (
-                        <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                          エラーが発生しました。もう一度お試しください。
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              )}
+              <ContactForm
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                submitStatus={submitStatus}
+              />
             </div>
           </div>
           
+          {/* 右側：プロフィール情報とサービス */}
           <div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                連絡先情報
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 mt-1">
-                    <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      メールアドレス
-                    </p>
-                    <a 
-                      href={`mailto:${profileData?.email}`}
-                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      {profileData?.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 mt-1">
-                    <svg className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      GitHub
-                    </p>
-                    <a 
-                      href={profileData?.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      {profileData?.github?.replace('https://', '')}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                対応可能な業務
-              </h3>
-              
-              <ul className="space-y-3 text-gray-600 dark:text-gray-300">
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  販売管理システムの開発（.NET、Java）
-                </li>
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  基幹システムの設計・開発・保守
-                </li>
-                <li className="flex items-start">
-                  <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  プロジェクトマネジメント
-                </li>
-              </ul>
-            </div>
+            <ContactInfo profileData={profileData} />
+            <ContactServices />
           </div>
         </div>
       </Section>

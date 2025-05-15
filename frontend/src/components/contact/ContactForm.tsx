@@ -44,7 +44,7 @@ export default function ContactForm({
    * @param e - 入力イベント
    */
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -114,17 +114,22 @@ export default function ContactForm({
           htmlFor="subject"
           className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          件名
+          お問い合わせ内容
         </label>
-        <input
-          type="text"
+        <select
           id="subject"
           name="subject"
           value={formData.subject}
           onChange={handleChange}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        />
+        >
+          <option value="">選択してください</option>
+          <option value="project">プロジェクトの相談</option>
+          <option value="quote">お見積り依頼</option>
+          <option value="question">技術的な質問</option>
+          <option value="other">その他</option>
+        </select>
       </div>
 
       {/* メッセージ入力フィールド */}
@@ -147,27 +152,26 @@ export default function ContactForm({
       </div>
 
       {/* 送信ボタン */}
-      <div className="flex justify-end">
+      <div>
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto"
+          className="w-full"
         >
           {isSubmitting ? '送信中...' : '送信する'}
         </Button>
+        
+        {submitStatus === 'error' && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+            エラーが発生しました。もう一度お試しください。
+          </p>
+        )}
       </div>
 
       {/* 送信成功メッセージ */}
       {submitStatus === 'success' && (
         <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-md">
           メッセージを送信しました。ありがとうございます。
-        </div>
-      )}
-
-      {/* エラーメッセージ */}
-      {submitStatus === 'error' && (
-        <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-md">
-          送信に失敗しました。もう一度お試しください。
         </div>
       )}
     </form>

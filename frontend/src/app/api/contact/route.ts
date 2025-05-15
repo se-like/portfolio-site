@@ -1,44 +1,34 @@
 import { NextResponse } from 'next/server';
 import sgMail from '@sendgrid/mail';
 
-// SendGridの初期化
+// SendGridのAPIキーを設定
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, company, subject, message } = body;
-
-    // バリデーション
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: '必須項目が入力されていません' },
-        { status: 400 }
-      );
-    }
-
-    // メールの内容
+    const formData = await request.json();
+    
+    // メール送信の設定
     const msg = {
-      to: process.env.EMAIL_TO,
-      from: process.env.EMAIL_FROM || '',
-      subject: `[お問い合わせ] ${subject}`,
+      to: process.env.CONTACT_EMAIL || 'your-email@example.com', // 送信先メールアドレス
+      from: process.env.FROM_EMAIL || 'noreply@example.com', // 送信元メールアドレス
+      subject: `[お問い合わせ] ${formData.subject}`,
       text: `
-名前: ${name}
-メールアドレス: ${email}
-会社名: ${company || '未入力'}
-件名: ${subject}
-
+お名前: ${formData.name}
+メールアドレス: ${formData.email}
+会社名: ${formData.company || '未入力'}
+お問い合わせ内容: ${formData.subject}
 メッセージ:
-${message}
+${formData.message}
       `,
       html: `
-<h2>お問い合わせがありました</h2>
-<p><strong>名前:</strong> ${name}</p>
-<p><strong>メールアドレス:</strong> ${email}</p>
-<p><strong>会社名:</strong> ${company || '未入力'}</p>
-<p><strong>件名:</strong> ${subject}</p>
-<p><strong>メッセージ:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>
+<h2>お問い合わせ内容</h2>
+<p><strong>お名前:</strong> ${formData.name}</p>
+<p><strong>メールアドレス:</strong> ${formData.email}</p>
+<p><strong>会社名:</strong> ${formData.company || '未入力'}</p>
+<p><strong>お問い合わせ内容:</strong> ${formData.subject}</p>
+<h3>メッセージ:</h3>
+<p>${formData.message.replace(/\n/g, '<br>')}</p>
       `,
     };
 
