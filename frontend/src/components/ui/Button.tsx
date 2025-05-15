@@ -1,43 +1,66 @@
 'use client';
 
-import { ButtonProps } from '@/types/common';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+import Link from 'next/link';
 
-export default function Button({
-  children,
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'gradient';
+  size?: 'sm' | 'md' | 'lg';
+  children: ReactNode;
+  href?: string;
+  className?: string;
+}
+
+const Button = ({
   variant = 'primary',
   size = 'md',
-  onClick,
-  type = 'button',
-  disabled = false,
+  children,
+  href,
   className = '',
-  id,
-}: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center px-8 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  ...props
+}: ButtonProps) => {
+  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
   
-  const variantStyles = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
-    gradient: 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 focus:ring-blue-500',
+  const variants = {
+    primary: 'bg-gradient-to-l from-indigo-500/20 via-blue-400/20 to-cyan-300/20 text-white font-semibold shadow-lg hover:from-indigo-500/30 hover:via-blue-400/30 hover:to-cyan-300/30 hover:shadow-xl transition-all duration-300 border border-white/10 backdrop-blur-sm',
+    secondary: 'bg-gray-600/90 text-white shadow-sm hover:bg-gray-700/90 hover:shadow-md transition-all duration-300',
+    outline: {
+      base: 'bg-gradient-to-l from-slate-500/20 via-gray-400/20 to-zinc-300/20 text-white font-semibold shadow-lg hover:from-slate-500/30 hover:via-gray-400/30 hover:to-zinc-300/30 hover:shadow-xl transition-all duration-300 border border-white/10 backdrop-blur-sm',
+      sm: 'px-4 py-2 text-sm',
+      md: 'px-6 py-3 text-base',
+      lg: 'px-8 py-4 text-lg',
+    },
+    gradient: 'bg-gradient-to-l from-slate-500/20 via-gray-400/20 to-zinc-300/20 text-white font-semibold shadow-lg hover:from-slate-500/30 hover:via-gray-400/30 hover:to-zinc-300/30 hover:shadow-xl transition-all duration-300 border border-white/10 backdrop-blur-sm',
   };
 
-  const sizeStyles = {
+  const sizes = {
     sm: 'px-4 py-2 text-sm',
     md: 'px-6 py-3 text-base',
     lg: 'px-8 py-4 text-lg',
   };
 
-  const styles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
+  const buttonClasses = `
+    ${baseStyles}
+    ${variant === 'outline' ? variants.outline.base : variants[variant]}
+    ${variant === 'outline' ? variants.outline[size] : sizes[size]}
+    ${className}
+  `.trim();
+
+  if (href) {
+    return (
+      <Link href={href}>
+        <button className={buttonClasses} {...props}>
+          {children}
+        </button>
+      </Link>
+    );
+  }
 
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={styles}
-      id={id}
-    >
+    <button className={buttonClasses} {...props}>
       {children}
     </button>
   );
-}
+};
+
+export default Button;
