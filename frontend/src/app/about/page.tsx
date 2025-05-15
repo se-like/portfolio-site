@@ -70,12 +70,12 @@ export default function AboutPage() {
               <p>
                 {profileData.pr}
               </p>
-              <div className="mt-4 space-y-2">
-                <p className="flex items-center">
-                  <span className="font-medium w-24">稼働開始:</span>
+              <div className="mt-4">
+                <p className="flex items-center mb-2 w-full">
+                  <span className="font-medium w-24">稼働開始可能時期:</span>
                   {profileData.available_from}
                 </p>
-                <p className="flex items-center">
+                <p className="flex items-center mb-2 w-full">
                   <span className="font-medium w-24">GitHub:</span>
                   <a 
                     href={profileData.github}
@@ -86,7 +86,7 @@ export default function AboutPage() {
                     {profileData.github.replace('https://', '')}
                   </a>
                 </p>
-                <p className="flex items-center">
+                <p className="flex items-center w-full">
                   <span className="font-medium w-24">メール:</span>
                   <a 
                     href={`mailto:${profileData.email}`}
