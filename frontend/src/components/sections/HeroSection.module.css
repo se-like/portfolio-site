@@ -8,8 +8,9 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: url('/images/pattern.svg');
-  opacity: 0.02;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.02) 75%, transparent 75%, transparent);
+  background-size: 20px 20px;
+  opacity: 0.1;
   z-index: 1;
 }
 
