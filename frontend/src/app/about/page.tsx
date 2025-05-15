@@ -103,15 +103,6 @@ export default function AboutPage() {
                     {profileData.email}
                   </a>
                 </p>
-                <p className="flex items-center">
-                  <span className="font-medium w-24">電話:</span>
-                  <a 
-                    href={`tel:${profileData.phone.replace(/-/g, '')}`}
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                  >
-                    {profileData.phone}
-                  </a>
-                </p>
               </div>
             </div>
           </div>
