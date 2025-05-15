@@ -20,7 +20,7 @@ export default function HeroSection() {
               流通・小売業の販売管理システムを中心に、.NET C#、Javaなどを用いたシステム開発のプロフェッショナル。基本設計から運用保守まで、システム開発の全工程に精通しています。
             </p>
             <div className={styles.buttonContainer}>
-              <Button href="/projects" variant="gradient" size="lg">
+              <Button href="/projects" variant="primary" size="lg">
                 プロジェクト実績
               </Button>
               <Button href="/contact" variant="outline" size="lg">

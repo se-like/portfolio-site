@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import Link from 'next/link';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'gradient';
+  variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: ReactNode;
   href?: string;
