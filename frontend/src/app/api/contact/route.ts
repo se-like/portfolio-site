@@ -66,6 +66,28 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+// エラーログの詳細化
+function logError(error: unknown, context: string) {
+  const timestamp = new Date().toISOString();
+  const errorInfo = {
+    timestamp,
+    context,
+    error: error instanceof Error ? {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    } : error
+  };
+
+  // 開発環境では詳細なエラー情報を出力
+  if (process.env.NODE_ENV === 'development') {
+    console.error('詳細なエラー情報:', JSON.stringify(errorInfo, null, 2));
+  } else {
+    // 本番環境では機密情報を除いたエラー情報を出力
+    console.error(`[${timestamp}] ${context}:`, error instanceof Error ? error.message : '不明なエラー');
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // 環境変数のチェック
@@ -84,6 +106,7 @@ export async function POST(request: NextRequest) {
     
     // レート制限のチェック
     if (isRateLimited(ip)) {
+      logError('レート制限超過', `IP: ${ip}`);
       return NextResponse.json(
         { error: 'リクエスト制限を超えました。しばらく時間をおいてから再度お試しください。' },
         { status: 429 }
@@ -136,17 +159,34 @@ ${sanitizedData.message}
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error('メール送信エラー:', error);
-    
-    // バリデーションエラーの場合
+    // エラーの種類に応じて適切なログを出力
     if (error instanceof z.ZodError) {
+      logError(error, 'バリデーションエラー');
       return NextResponse.json(
         { error: '入力内容に誤りがあります', details: error.errors },
         { status: 400 }
       );
     }
-    
-    // その他のエラーの場合
+
+    if (error instanceof Error) {
+      if (error.message.includes('SENDGRID_API_KEY')) {
+        logError(error, 'SendGrid APIキー未設定');
+        return NextResponse.json(
+          { error: 'メール送信の設定が完了していません' },
+          { status: 500 }
+        );
+      }
+      if (error.message.includes('EMAIL_')) {
+        logError(error, 'メール設定エラー');
+        return NextResponse.json(
+          { error: 'メール送信の設定が完了していません' },
+          { status: 500 }
+        );
+      }
+    }
+
+    // その他のエラー
+    logError(error, '予期せぬエラー');
     return NextResponse.json(
       { error: 'メールの送信に失敗しました' },
       { status: 500 }
