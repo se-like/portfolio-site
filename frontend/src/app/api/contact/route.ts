@@ -139,7 +139,8 @@ export async function POST(request: NextRequest) {
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
     
     // レート制限のチェック
-    if (isRateLimited(ip)) {
+    const limited = isRateLimited(ip);
+    if (limited) {
       logError('レート制限超過', `IP: ${ip}`);
       return NextResponse.json(
         { error: 'リクエスト制限を超えました。しばらく時間をおいてから再度お試しください。' },
