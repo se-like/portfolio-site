@@ -102,7 +102,7 @@ export default function ProjectsSection() {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="project-image"
-                  quality={85}
+                  quality={75}
                   loading="lazy"
                   onError={(e) => {
                     // 画像読み込み失敗時のフォールバック処理
