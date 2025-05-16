@@ -10,19 +10,19 @@ export async function POST(request: Request) {
     if (!process.env.SENDGRID_API_KEY) {
       throw new Error('SENDGRID_API_KEY is not set');
     }
-    if (!process.env.CONTACT_EMAIL) {
-      throw new Error('CONTACT_EMAIL is not set');
+    if (!process.env.EMAIL_TO) {
+      throw new Error('EMAIL_TO is not set');
     }
-    if (!process.env.FROM_EMAIL) {
-      throw new Error('FROM_EMAIL is not set');
+    if (!process.env.EMAIL_FROM) {
+      throw new Error('EMAIL_FROM is not set');
     }
 
     const formData = await request.json();
     
     // メール送信の設定
     const msg = {
-      to: process.env.CONTACT_EMAIL as string,
-      from: process.env.FROM_EMAIL as string,
+      to: process.env.EMAIL_TO as string,
+      from: process.env.EMAIL_FROM as string,
       subject: `[お問い合わせ] ${formData.subject}`,
       text: `
 お名前: ${formData.name}
