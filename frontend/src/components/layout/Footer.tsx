@@ -60,6 +60,7 @@ export default function Footer() {
             <p>このサイトはスキルシートのExcelをもとにAIエージェントを使用して作成されました。</p>
             <p className="mt-2">
               使用技術: Next.js, React, TypeScript, Tailwind CSS | 
+              テスト: Jest, React Testing Library | 
               ホスティング: Vercel | 
               メール送信: SendGrid
             </p>

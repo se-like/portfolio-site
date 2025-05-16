@@ -1,57 +1,39 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { ProfileData } from '@/types/profile';
+import { ErrorBoundary } from 'react-error-boundary';
 
-export default function AboutPage() {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+// エラーコンポーネント
+function ErrorFallback({ error }: { error: Error }) {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-xl text-red-500">データの読み込みに失敗しました: {error.message}</div>
+    </div>
+  );
+}
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await fetch('/projects.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setProfileData(data);
-      } catch (error) {
-        console.error('プロフィールデータの読み込みに失敗しました:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+// ローディングコンポーネント
+function Loading() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-xl">読み込み中...</div>
+    </div>
+  );
+}
 
-    fetchProfileData();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl">読み込み中...</div>
-      </div>
-    );
-  }
-
-  if (!profileData) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-red-500">データの読み込みに失敗しました</div>
-      </div>
-    );
-  }
-
+// プロフィールコンテンツコンポーネント
+function ProfileContent({ data }: { data: ProfileData }) {
   // プロジェクトを時系列でソート
-  const sortedProjects = [...profileData.projects].sort((a, b) => {
+  const sortedProjects = [...data.projects].sort((a, b) => {
     return b.period.localeCompare(a.period);
   });
 
   return (
-    <>
+    <div>
       {/* Profile Section */}
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -62,45 +44,45 @@ export default function AboutPage() {
             />
             <div className="mt-6 space-y-4 text-gray-600 dark:text-gray-300">
               <p>
-                {profileData.name}、{profileData.age}歳。{profileData.qualifications.join('、')}の資格を保有しています。
+                {data.name}、{data.age}歳。{data.qualifications.join('、')}の資格を保有しています。
               </p>
               <p>
-                {profileData.specialties.business}が専門分野で、{profileData.specialties.technology.join('、')}などの技術を得意としています。
+                {data.specialties.business}が専門分野で、{data.specialties.technology.join('、')}などの技術を得意としています。
               </p>
               <p>
-                {profileData.pr}
+                {data.pr}
               </p>
               <div className="mt-4 space-y-2">
                 <p className="flex items-center">
                   <span className="font-medium w-24">学歴:</span>
-                  {profileData.education}
+                  {data.education}
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium w-24">最寄駅:</span>
-                  {profileData.station}
+                  {data.station}
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium w-40">稼働開始可能時期:</span>
-                  {profileData.available_from}
+                  {data.available_from}
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium w-24">GitHub:</span>
                   <a 
-                    href={profileData.github}
+                    href={data.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
-                    {profileData.github.replace('https://', '')}
+                    {data.github.replace('https://', '')}
                   </a>
                 </p>
                 <p className="flex items-center">
                   <span className="font-medium w-24">メール:</span>
                   <a 
-                    href={`mailto:${profileData.email}`}
+                    href={`mailto:${data.email}`}
                     className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
-                    {profileData.email}
+                    {data.email}
                   </a>
                 </p>
               </div>
@@ -124,6 +106,8 @@ export default function AboutPage() {
                   fill 
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={75}
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -208,12 +192,12 @@ export default function AboutPage() {
           </div>
           
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <div className="text-4xl mb-4">🏃‍♂️</div>
+            <div className="text-4xl mb-4">🚶‍♂️</div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              ランニング
+              ウォーキング
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              週に3回のランニングを日課にしています。体を動かすことでリフレッシュし、新しいアイデアが浮かぶことも多いです。年に1回はハーフマラソンに参加しています。
+              毎日のウォーキングを日課にしています。体を動かすことでリフレッシュし、新しいアイデアが浮かぶことも多いです。自然の中を歩くことで、心身の健康を保ちながら、仕事の効率も高めています。
             </p>
           </div>
           
@@ -228,6 +212,24 @@ export default function AboutPage() {
           </div>
         </div>
       </Section>
-    </>
+    </div>
   );
+}
+
+// メインコンポーネント
+export default function AboutPage() {
+  const [data, setData] = useState<ProfileData | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    fetch('/projects.json')
+      .then(res => res.json())
+      .then(setData)
+      .catch(setError);
+  }, []);
+
+  if (error) return <ErrorFallback error={error} />;
+  if (!data) return <Loading />;
+  
+  return <ProfileContent data={data} />;
 }
