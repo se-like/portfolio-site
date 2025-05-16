@@ -1,7 +1,7 @@
 const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
-  // next.config.jsと.envファイルを読み込むためのパス
+  // next.config.jsと.envファイルを読み込むために、Next.jsアプリケーションのパスを指定
   dir: './',
 });
 
@@ -10,11 +10,18 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/components/(.*)$': '<rootDir>/components/$1',
+    '^@/lib/(.*)$': '<rootDir>/lib/$1',
+    '^@/styles/(.*)$': '<rootDir>/styles/$1',
   },
+  collectCoverageFrom: [
+    'components/**/*.{js,jsx,ts,tsx}',
+    'lib/**/*.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
+    '!**/node_modules/**',
+  ],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-    '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+    '<rootDir>/__tests__/**/*.test.{js,jsx,ts,tsx}',
   ],
 };
 
