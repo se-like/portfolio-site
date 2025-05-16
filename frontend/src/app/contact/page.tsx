@@ -1,13 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import ContactForm from '@/components/contact/ContactForm';
 import ContactInfo from '@/components/contact/ContactInfo';
 import ContactServices from '@/components/contact/ContactServices';
 import { useProfileData } from '@/hooks/useProfileData';
 import { FormData } from '@/types/contact';
+
+// お問い合わせフォームを遅延ロード
+const ContactForm = dynamic(() => import('@/components/contact/ContactForm'), {
+  loading: () => <div className="text-center">読み込み中...</div>,
+  ssr: false
+});
 
 export default function ContactPage() {
   // プロフィールデータの取得

@@ -44,7 +44,7 @@ const formSchema = z.object({
 });
 
 export default function ContactForm({ onSubmit, isSubmitting = false, submitStatus = 'idle' }: ContactFormProps) {
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, trigger } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -54,10 +54,12 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
       message: '',
       recaptchaToken: '',
     },
+    mode: 'onChange',
   });
 
   const handleRecaptchaChange = (token: string | null) => {
     setValue('recaptchaToken', token || '');
+    trigger('recaptchaToken');
   };
 
   const onSubmitForm = async (data: FormData) => {
@@ -159,6 +161,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
         <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
           onChange={handleRecaptchaChange}
+          data-testid="recaptcha"
         />
       </div>
 

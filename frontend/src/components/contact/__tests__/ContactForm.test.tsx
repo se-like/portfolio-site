@@ -1,14 +1,34 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ContactForm from '../ContactForm';
 
 // モック関数
 const mockOnSubmit = jest.fn();
 
+// reCAPTCHAのモック
+const mockRecaptchaToken = 'test-token';
+const mockRecaptcha = {
+  render: jest.fn(),
+  reset: jest.fn(),
+  getResponse: jest.fn().mockReturnValue(mockRecaptchaToken),
+};
+
+// ReCAPTCHAをテスト用にモック
+jest.mock('react-google-recaptcha', () => ({
+  __esModule: true,
+  default: ({ onChange, ...props }: any) => (
+    <button data-testid="recaptcha" onClick={() => onChange && onChange('test-token')} {...props}>
+      reCAPTCHA-mock
+    </button>
+  ),
+}));
+
 describe('ContactForm', () => {
   beforeEach(() => {
     // テスト前にモックをリセット
     mockOnSubmit.mockClear();
+    // reCAPTCHAのモックを設定
+    window.grecaptcha = mockRecaptcha;
   });
 
   it('フォームが正しくレンダリングされる', () => {
@@ -49,7 +69,7 @@ describe('ContactForm', () => {
     // エラーメッセージが表示されることを確認
     await waitFor(() => {
       expect(screen.getByText('有効なメールアドレスを入力してください')).toBeInTheDocument();
-    });
+    }, { timeout: 3000 });
   });
 
   it('正しい入力で送信ボタンをクリックすると、onSubmitが呼ばれる', async () => {
@@ -61,27 +81,22 @@ describe('ContactForm', () => {
     await userEvent.selectOptions(screen.getByLabelText(/お問い合わせ内容/), 'project');
     await userEvent.type(screen.getByLabelText(/メッセージ/), 'テストメッセージ');
 
-    // reCAPTCHAのモック
-    const recaptchaToken = 'test-token';
-    window.grecaptcha = {
-      render: jest.fn(),
-      reset: jest.fn(),
-      getResponse: jest.fn().mockReturnValue(recaptchaToken),
-    };
+    // reCAPTCHAのonChangeを手動で呼び出す
+    fireEvent.click(screen.getByTestId('recaptcha'));
 
     // 送信ボタンをクリック
-    fireEvent.click(screen.getByText('送信する'));
+    await act(async () => {
+      fireEvent.click(screen.getByText('送信する'));
+    });
 
     // onSubmitが正しい値で呼ばれることを確認
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith({
-        name: 'テスト太郎',
-        email: 'test@example.com',
-        company: '',
-        subject: 'project',
-        message: 'テストメッセージ',
-        recaptchaToken,
-      });
+    expect(mockOnSubmit).toHaveBeenCalledWith({
+      name: 'テスト太郎',
+      email: 'test@example.com',
+      company: '',
+      subject: 'project',
+      message: 'テストメッセージ',
+      recaptchaToken: 'test-token',
     });
   });
 

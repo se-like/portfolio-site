@@ -61,6 +61,8 @@ export default function HeroSection() {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className={styles.profileImage}
                 priority
+                quality={85}
+                loading="eager"
                 onError={(e) => {
                   // 画像読み込み失敗時にフォールバックアイコンを表示
                   const target = e.target as HTMLImageElement;
