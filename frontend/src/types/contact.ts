@@ -6,12 +6,18 @@ export interface FormData {
   company: string;
   subject: string;
   message: string;
+  recaptchaToken: string | null;
 }
 
 export interface ContactFormProps {
-  onSubmit: (formData: FormData) => Promise<void>;
-  isSubmitting: boolean;
-  submitStatus: 'idle' | 'success' | 'error';
+  onSubmit: (data: FormData) => Promise<void>;
+  isSubmitting?: boolean;
+  submitStatus?: 'idle' | 'success' | 'error';
+}
+
+export interface ContactFormState {
+  type: 'idle' | 'success' | 'error';
+  message: string;
 }
 
 export interface ContactInfoProps {

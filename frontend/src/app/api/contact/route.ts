@@ -25,7 +25,9 @@ const contactFormSchema = z.object({
     }),
   message: z.string()
     .min(1, 'メッセージは必須です')
-    .max(2000, 'メッセージは2000文字以内で入力してください')
+    .max(2000, 'メッセージは2000文字以内で入力してください'),
+  recaptchaToken: z.string()
+    .min(1, 'reCAPTCHAの検証が必要です')
 });
 
 // HTMLエスケープ関数
@@ -88,6 +90,25 @@ function logError(error: unknown, context: string) {
   }
 }
 
+// reCAPTCHAのトークンを検証する関数
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  try {
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+    });
+
+    const data = await response.json();
+    return data.success;
+  } catch (error) {
+    logError(error, 'reCAPTCHA検証エラー');
+    return false;
+  }
+}
+
 // メール送信を非同期で実行する関数
 async function sendEmailAsync(msg: sgMail.MailDataRequired) {
   try {
@@ -110,6 +131,9 @@ export async function POST(request: NextRequest) {
     if (!process.env.EMAIL_FROM) {
       throw new Error('EMAIL_FROM is not set');
     }
+    if (!process.env.RECAPTCHA_SECRET_KEY) {
+      throw new Error('RECAPTCHA_SECRET_KEY is not set');
+    }
 
     // IPアドレスの取得
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
@@ -127,6 +151,15 @@ export async function POST(request: NextRequest) {
     
     // 入力値のバリデーション
     const validatedData = contactFormSchema.parse(formData);
+    
+    // reCAPTCHAの検証
+    const isValidRecaptcha = await verifyRecaptcha(validatedData.recaptchaToken);
+    if (!isValidRecaptcha) {
+      return NextResponse.json(
+        { error: 'reCAPTCHAの検証に失敗しました。もう一度お試しください。' },
+        { status: 400 }
+      );
+    }
     
     // 入力値のサニタイズ
     const sanitizedData = {
@@ -193,6 +226,13 @@ ${sanitizedData.message}
         logError(error, 'メール設定エラー');
         return NextResponse.json(
           { error: 'メール送信の設定が完了していません' },
+          { status: 500 }
+        );
+      }
+      if (error.message.includes('RECAPTCHA_SECRET_KEY')) {
+        logError(error, 'reCAPTCHA設定エラー');
+        return NextResponse.json(
+          { error: 'reCAPTCHAの設定が完了していません' },
           { status: 500 }
         );
       }
