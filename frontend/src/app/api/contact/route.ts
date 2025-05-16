@@ -113,7 +113,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
 async function sendEmailAsync(msg: sgMail.MailDataRequired) {
   try {
     await sgMail.send(msg);
-    logError('メール送信成功', `To: ${msg.to}`);
+    console.log('メール送信成功:', `To: ${msg.to}`);
   } catch (error) {
     logError(error, 'メール送信エラー');
   }
