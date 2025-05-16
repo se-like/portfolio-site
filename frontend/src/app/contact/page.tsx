@@ -34,8 +34,9 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.error || '送信に失敗しました');
       }
       
@@ -43,6 +44,7 @@ export default function ContactPage() {
     } catch (error) {
       console.error('送信エラー:', error);
       setSubmitStatus('error');
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
