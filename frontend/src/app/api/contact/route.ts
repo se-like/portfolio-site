@@ -1,22 +1,22 @@
 import { NextResponse } from 'next/server';
 import sgMail from '@sendgrid/mail';
 
-// 環境変数のチェック
-if (!process.env.SENDGRID_API_KEY) {
-  throw new Error('SENDGRID_API_KEY is not set');
-}
-if (!process.env.CONTACT_EMAIL) {
-  throw new Error('CONTACT_EMAIL is not set');
-}
-if (!process.env.FROM_EMAIL) {
-  throw new Error('FROM_EMAIL is not set');
-}
-
 // SendGridのAPIキーを設定
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
 export async function POST(request: Request) {
   try {
+    // 環境変数のチェック
+    if (!process.env.SENDGRID_API_KEY) {
+      throw new Error('SENDGRID_API_KEY is not set');
+    }
+    if (!process.env.CONTACT_EMAIL) {
+      throw new Error('CONTACT_EMAIL is not set');
+    }
+    if (!process.env.FROM_EMAIL) {
+      throw new Error('FROM_EMAIL is not set');
+    }
+
     const formData = await request.json();
     
     // メール送信の設定
