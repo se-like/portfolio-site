@@ -12,7 +12,6 @@
 
 'use client';
 
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -85,6 +84,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
           type="text"
           id="name"
           {...register('name')}
+          aria-invalid={!!errors.name}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
         {errors.name && (
@@ -100,6 +100,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
           type="email"
           id="email"
           {...register('email')}
+          aria-invalid={!!errors.email}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
         {errors.email && (
@@ -115,6 +116,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
           type="text"
           id="company"
           {...register('company')}
+          aria-invalid={!!errors.company}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
         {errors.company && (
@@ -129,6 +131,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
         <select
           id="subject"
           {...register('subject')}
+          aria-invalid={!!errors.subject}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         >
           <option value="">選択してください</option>
@@ -150,6 +153,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
           id="message"
           rows={6}
           {...register('message')}
+          aria-invalid={!!errors.message}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
         {errors.message && (
