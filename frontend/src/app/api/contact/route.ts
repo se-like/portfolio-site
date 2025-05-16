@@ -88,6 +88,16 @@ function logError(error: unknown, context: string) {
   }
 }
 
+// メール送信を非同期で実行する関数
+async function sendEmailAsync(msg: sgMail.MailDataRequired) {
+  try {
+    await sgMail.send(msg);
+    logError('メール送信成功', `To: ${msg.to}`);
+  } catch (error) {
+    logError(error, 'メール送信エラー');
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // 環境変数のチェック
@@ -151,9 +161,12 @@ ${sanitizedData.message}
       `,
     };
 
-    // メール送信
-    await sgMail.send(msg);
+    // メール送信を非同期で実行
+    sendEmailAsync(msg).catch(error => {
+      logError(error, '非同期メール送信エラー');
+    });
 
+    // 即時レスポンスを返す
     return NextResponse.json(
       { message: 'お問い合わせを受け付けました' },
       { status: 200 }
