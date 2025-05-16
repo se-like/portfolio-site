@@ -3,10 +3,10 @@ import { ProfileData } from '@/types/profile';
 export interface FormData {
   name: string;
   email: string;
-  company: string;
+  company?: string;
   subject: string;
   message: string;
-  recaptchaToken: string | null;
+  recaptchaToken: string;
 }
 
 export interface ContactFormProps {

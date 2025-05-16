@@ -20,12 +20,27 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { FormData, ContactFormProps } from '@/types/contact';
 
 const formSchema = z.object({
-  name: z.string().min(1, 'お名前を入力してください'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  company: z.string(),
-  subject: z.string().min(1, 'お問い合わせ内容を選択してください'),
-  message: z.string().min(1, 'メッセージを入力してください'),
-  recaptchaToken: z.string().nullable(),
+  name: z.string()
+    .min(1, 'お名前は必須です')
+    .max(100, 'お名前は100文字以内で入力してください')
+    .regex(/^[ぁ-んァ-ン一-龥a-zA-Z\s]+$/, 'お名前は日本語または英語で入力してください'),
+  email: z.string()
+    .min(1, 'メールアドレスは必須です')
+    .email('有効なメールアドレスを入力してください')
+    .max(255, 'メールアドレスは255文字以内で入力してください'),
+  company: z.string()
+    .max(100, '会社名は100文字以内で入力してください')
+    .optional(),
+  subject: z.string()
+    .min(1, 'お問い合わせ内容は必須です')
+    .refine((val: string) => ['project', 'quote', 'question', 'other'].includes(val), {
+      message: '無効なお問い合わせ内容です'
+    }),
+  message: z.string()
+    .min(1, 'メッセージは必須です')
+    .max(2000, 'メッセージは2000文字以内で入力してください'),
+  recaptchaToken: z.string()
+    .min(1, 'reCAPTCHAの検証が必要です')
 });
 
 export default function ContactForm({ onSubmit, isSubmitting = false, submitStatus = 'idle' }: ContactFormProps) {
@@ -37,12 +52,12 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
       company: '',
       subject: '',
       message: '',
-      recaptchaToken: null,
+      recaptchaToken: '',
     },
   });
 
   const handleRecaptchaChange = (token: string | null) => {
-    setValue('recaptchaToken', token);
+    setValue('recaptchaToken', token || '');
   };
 
   const onSubmitForm = async (data: FormData) => {
@@ -100,6 +115,9 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
           {...register('company')}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
+        {errors.company && (
+          <p className="mt-1 text-sm text-red-600">{errors.company.message}</p>
+        )}
       </div>
 
       <div>
