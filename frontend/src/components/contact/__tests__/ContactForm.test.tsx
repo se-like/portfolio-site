@@ -16,7 +16,7 @@ const mockRecaptcha = {
 // ReCAPTCHAをテスト用にモック
 jest.mock('react-google-recaptcha', () => ({
   __esModule: true,
-  default: ({ onChange, ...props }: any) => (
+  default: ({ onChange, ...props }: { onChange?: (token: string) => void; [key: string]: unknown }) => (
     <button data-testid="recaptcha" onClick={() => onChange && onChange('test-token')} {...props}>
       reCAPTCHA-mock
     </button>

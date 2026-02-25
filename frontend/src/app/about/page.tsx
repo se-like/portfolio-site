@@ -5,7 +5,6 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
 import { ProfileData } from '@/types/profile';
-import { ErrorBoundary } from 'react-error-boundary';
 
 // エラーコンポーネント
 function ErrorFallback({ error }: { error: Error }) {

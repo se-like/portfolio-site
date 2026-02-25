@@ -12,13 +12,18 @@
 
 'use client';
 
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { FormData, ContactFormProps } from '@/types/contact';
 
-const formSchema = z.object({
+const siteKey = typeof window !== 'undefined'
+  ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
+  : process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+
+const createFormSchema = (requireRecaptcha: boolean) => z.object({
   name: z.string()
     .min(1, 'お名前は必須です')
     .max(100, 'お名前は100文字以内で入力してください')
@@ -38,11 +43,15 @@ const formSchema = z.object({
   message: z.string()
     .min(1, 'メッセージは必須です')
     .max(2000, 'メッセージは2000文字以内で入力してください'),
-  recaptchaToken: z.string()
-    .min(1, 'reCAPTCHAの検証が必要です')
+  recaptchaToken: requireRecaptcha
+    ? z.string().min(1, 'reCAPTCHAの検証が必要です')
+    : z.string().optional(),
 });
 
+const hasRecaptcha = !!siteKey.trim();
+
 export default function ContactForm({ onSubmit, isSubmitting = false, submitStatus = 'idle' }: ContactFormProps) {
+  const formSchema = useMemo(() => createFormSchema(hasRecaptcha), []);
   const { register, handleSubmit, formState: { errors }, reset, setValue, trigger } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +71,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
   };
 
   const onSubmitForm = async (data: FormData) => {
-    if (!data.recaptchaToken) {
+    if (hasRecaptcha && !data.recaptchaToken) {
       alert('reCAPTCHAの認証が必要です');
       return;
     }
@@ -161,13 +170,15 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
         )}
       </div>
 
-      <div className="flex justify-center">
-        <ReCAPTCHA
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-          onChange={handleRecaptchaChange}
-          data-testid="recaptcha"
-        />
-      </div>
+      {hasRecaptcha && (
+        <div className="flex justify-center">
+          <ReCAPTCHA
+            sitekey={siteKey}
+            onChange={handleRecaptchaChange}
+            data-testid="recaptcha"
+          />
+        </div>
+      )}
 
       <div>
         <button

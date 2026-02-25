@@ -20,7 +20,7 @@ jest.mock('@/hooks/useProfileData', () => ({
 // reCAPTCHAをテスト用にモック
 jest.mock('react-google-recaptcha', () => ({
   __esModule: true,
-  default: ({ onChange, ...props }: any) => (
+  default: ({ onChange, ...props }: { onChange?: (token: string) => void; [key: string]: unknown }) => (
     <button data-testid="recaptcha" onClick={() => onChange && onChange('test-token')} {...props}>
       reCAPTCHA-mock
     </button>
@@ -35,7 +35,7 @@ describe('ContactPage', () => {
       reset: jest.fn(),
       render: jest.fn(),
     };
-    global.fetch = undefined as any;
+    global.fetch = undefined as unknown as typeof fetch;
   });
 
   afterEach(() => {
@@ -117,7 +117,7 @@ describe('ContactPage', () => {
           }),
         });
       }, { timeout: 2000 });
-    } catch (e) {
+    } catch {
       // 例外は無視
     }
   });
