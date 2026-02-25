@@ -267,6 +267,23 @@ body {
   transform: scale(1.1);
 }
 
+/* 個人開発・プロダクトカード：画像を切り取らず全体表示 */
+.product-card-image-container {
+  height: auto;
+  aspect-ratio: 16 / 10;
+  min-height: 14rem;
+  background-color: var(--border);
+}
+
+.product-card-image {
+  object-fit: contain;
+  object-position: center;
+}
+
+.product-card:hover .product-card-image {
+  transform: none;
+}
+
 /* Skill Card Styles */
 .skill-card {
   background-color: var(--card);

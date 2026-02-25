@@ -44,15 +44,15 @@ export default function PersonalProductsSection() {
             href={product.productUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-card card-hover block cursor-pointer no-underline text-inherit"
+            className="project-card card-hover block cursor-pointer no-underline text-inherit product-card"
           >
-            <div className="project-image-container">
+            <div className="project-image-container product-card-image-container">
               <Image
                 src={product.imageUrl}
                 alt={product.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 512px"
-                className="project-image object-cover object-top"
+                className="project-image product-card-image"
                 quality={85}
                 loading="lazy"
                 onError={(e) => {
