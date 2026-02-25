@@ -13,6 +13,18 @@ const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSect
   )
 });
 
+// PersonalProductsSectionを遅延読み込み
+const PersonalProductsSection = dynamic(
+  () => import('@/components/sections/PersonalProductsSection'),
+  {
+    loading: () => (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <div className="text-xl">読み込み中...</div>
+      </div>
+    )
+  }
+);
+
 // ContactSectionを遅延読み込み
 const ContactSection = dynamic(() => import('@/components/sections/ContactSection'), {
   loading: () => (
@@ -28,6 +40,7 @@ export default function Home() {
       <HeroSection />
       <SkillsSection />
       <ProjectsSection />
+      <PersonalProductsSection />
       <ContactSection />
     </main>
   );

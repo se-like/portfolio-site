@@ -6,7 +6,7 @@ export interface FormData {
   company?: string;
   subject: string;
   message: string;
-  recaptchaToken: string;
+  recaptchaToken?: string;
 }
 
 export interface ContactFormProps {
