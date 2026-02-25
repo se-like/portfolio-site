@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { FormData, ContactFormProps } from '@/types/contact';
+import { ContactFormProps } from '@/types/contact';
 
 const siteKey = typeof window !== 'undefined'
   ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
@@ -50,9 +50,11 @@ const createFormSchema = (requireRecaptcha: boolean) => z.object({
 
 const hasRecaptcha = !!siteKey.trim();
 
+type FormSchema = z.infer<ReturnType<typeof createFormSchema>>;
+
 export default function ContactForm({ onSubmit, isSubmitting = false, submitStatus = 'idle' }: ContactFormProps) {
   const formSchema = useMemo(() => createFormSchema(hasRecaptcha), []);
-  const { register, handleSubmit, formState: { errors }, reset, setValue, trigger } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, trigger } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -70,7 +72,7 @@ export default function ContactForm({ onSubmit, isSubmitting = false, submitStat
     trigger('recaptchaToken');
   };
 
-  const onSubmitForm = async (data: FormData) => {
+  const onSubmitForm = async (data: FormSchema) => {
     if (hasRecaptcha && !data.recaptchaToken) {
       alert('reCAPTCHAの認証が必要です');
       return;
