@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PicSche - 学校のお便りを撮るだけでカレンダーに自動登録 | iOS &amp; Android対応</title>
+  <meta name="description" content="学校からのお便り、月間カレンダーを撮影するだけでAIが予定を自動抽出。iOS・Androidのカレンダーに一括登録できる時短アプリ。初回2回無料・チャージのみ。iOS版・Android版対応。"/>
+  <link rel="stylesheet" href="/products/PicSche/picsche.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* Material Icons Round: 同一オリジンで配信（外部フォントがブロックされる環境でも表示） */
+    @font-face {
+      font-family: 'Material Icons Round';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url(/products/PicSche/assets/fonts/material-icons-round.woff2) format('woff2');
+    }
+    .material-icons-round {
+      font-family: 'Material Icons Round';
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      /* font-size は指定しない：Tailwind の text-6xl / text-lg 等で制御 */
+    }
+  </style>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    html[lang="ja"] .lang-en { display: none !important; }
+    html[lang="en"] .lang-ja { display: none !important; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary ~ * { animation: sweep .3s ease-out; }
+    @keyframes sweep { from { opacity: 0; } to { opacity: 1; } }
+    /* ストアバッジ: 同じ枠サイズ。Google PlayはPNG内余白が多いため拡大して見た目を揃える */
+    .store-badge-wrap {
+      width: 135px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .store-badge-wrap img {
+      width: 135px;
+      height: 44px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+    /* Google Play PNGは余白が多いため拡大し、枠でクロップしてApp Storeと同サイズに見せる */
+    .store-badge-wrap--google img {
+      transform: scale(1.35);
+    }
+    /* クリックでライトボックス拡大。ホバーは軽く拡大してクリック可能を示す */
+    .hover-zoom {
+      position: relative;
+      display: inline-block;
+      overflow: visible;
+      cursor: pointer;
+    }
+    .hover-zoom img {
+      transition: transform 0.2s ease;
+      transform-origin: center center;
+    }
+    .hover-zoom:hover img {
+      transform: scale(1.08);
+    }
+    .hover-zoom:hover {
+      z-index: 30;
+    }
+    /* ライトボックスオーバーレイ */
+    #lightbox {
+      backdrop-filter: blur(4px);
+    }
+    #lightbox img {
+      max-width: min(90vw, 800px);
+      max-height: 85vh;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased min-h-screen">
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="#" class="flex items-center gap-2">
+          <div class="h-9 w-9 rounded-full overflow-hidden bg-white shadow-sm ring-1 ring-gray-200/80 flex-shrink-0">
+              <img src="/products/PicSche/assets/store/icon.png?v=2" alt="PicSche" class="w-full h-full object-contain"/>
+            </div>
+          <span class="font-bold text-xl text-gray-900">PicSche</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-gray-600 hover:text-primary font-medium transition">
+            <span class="lang-ja">機能</span>
+            <span class="lang-en">Features</span>
+          </a>
+          <a href="#how-it-works" class="text-gray-600 hover:text-primary font-medium transition">
+            <span class="lang-ja">使い方</span>
+            <span class="lang-en">How it works</span>
+          </a>
+          <a href="#pricing" class="text-gray-600 hover:text-primary font-medium transition">
+            <span class="lang-ja">料金</span>
+            <span class="lang-en">Pricing</span>
+          </a>
+          <a href="#faq" class="text-gray-600 hover:text-primary font-medium transition">
+            <span class="lang-ja">よくある質問</span>
+            <span class="lang-en">FAQ</span>
+          </a>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex rounded-lg border border-gray-200 overflow-hidden">
+            <button type="button" data-lang="ja" class="lang-switch px-3 py-1.5 text-sm font-medium bg-primary text-white" aria-pressed="true">
+              日本語
+            </button>
+            <button type="button" data-lang="en" class="lang-switch px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100" aria-pressed="false">
+              English
+            </button>
+          </div>
+          <a href="#cta" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-white bg-primary hover:bg-primary-dark font-bold text-sm transition shadow-sm">
+            <span class="lang-ja">ダウンロード</span>
+            <span class="lang-en">Download</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="relative overflow-hidden bg-gradient-to-b from-[#E3F2FD] to-white py-16 lg:py-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 class="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-6">
+              <span class="lang-ja">学校からのお便り、<br/>もう手で打ち込まない。</span>
+              <span class="lang-en">School handouts.<br/>No more typing.</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-4">
+              <span class="lang-ja">撮るだけで予定が自動登録。子育て世帯の時短アプリ。</span>
+              <span class="lang-en">Snap a photo and events go straight to your calendar. The time-saver for busy parents.</span>
+            </p>
+            <p class="text-gray-600 text-sm mb-8">
+              <span class="lang-ja">学校のプリント、習い事のスケジュール、ゴミ出しカレンダー。AIが写真から予定を読み取り、カレンダーに一括登録。月間カレンダーなら20件以上を一度に処理。</span>
+              <span class="lang-en">School flyers, lesson schedules, recycling calendars. AI reads your photos and adds events to your calendar in one go. Handle 20+ events from a single monthly calendar.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-stretch">
+              <a href="#" class="inline-flex items-center justify-center rounded-xl bg-gray-900 text-white font-bold shadow-lg hover:opacity-90 transition p-2 shrink-0 h-14 min-w-[150px]">
+                <span class="store-badge-wrap"><img src="/products/PicSche/assets/store/app-store-badge.svg" alt="Download on the App Store"/></span>
+              </a>
+              <a href="#" class="inline-flex items-center justify-center rounded-xl bg-primary text-white font-bold shadow-lg hover:bg-primary-dark transition p-2 shrink-0 h-14 min-w-[150px]">
+                <span class="store-badge-wrap store-badge-wrap--google"><img src="/products/PicSche/assets/store/google-play-badge.png" alt="Get it on Google Play"/></span>
+              </a>
+            </div>
+            <p class="mt-4 text-sm text-gray-500">
+              <span class="lang-ja">無料で今すぐ試せる（初回2回まで無料・広告なし）</span>
+              <span class="lang-en">Free to try (2 free uses, then charge · No ads)</span>
+            </p>
+          </div>
+          <div class="relative flex justify-center items-center">
+            <div class="w-full max-w-lg rounded-2xl overflow-hidden bg-white/90 shadow-xl ring-2 ring-white/60 flex-shrink-0">
+              <img src="/products/PicSche/assets/hero/hero-promo.png" alt="パシャッと撮るだけ、予定登録完了。お便りを撮影してAIでカレンダーに自動登録" class="w-full h-auto object-contain block"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="py-16 bg-[#F5F5F5]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+          <span class="lang-ja">こんなお悩み、ありませんか？</span>
+          <span class="lang-en">Does this sound familiar?</span>
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-sm overflow-hidden hover:overflow-visible hover:z-10 relative">
+            <span class="hover-zoom block rounded-xl overflow-visible"><img src="/products/PicSche/assets/problem/problem-typing.png" alt="" class="w-full h-40 object-cover rounded-xl mb-4"/></span>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              <span class="lang-ja">手入力に10分以上</span>
+              <span class="lang-en">10+ minutes of typing</span>
+            </h3>
+            <p class="text-gray-600 text-sm">
+              <span class="lang-ja">学校からのお便り1枚を打ち込むのに10〜15分。月に何度も…</span>
+              <span class="lang-en">One school flyer takes 10–15 minutes to type. Again and again every month.</span>
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm overflow-hidden hover:overflow-visible hover:z-10 relative">
+            <span class="hover-zoom block rounded-xl overflow-visible"><img src="/products/PicSche/assets/problem/problem-forget.png" alt="" class="w-full h-40 object-cover rounded-xl mb-4"/></span>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              <span class="lang-ja">持ち物を忘れてしまう</span>
+              <span class="lang-en">Forgotten items</span>
+            </h3>
+            <p class="text-gray-600 text-sm">
+              <span class="lang-ja">カレンダーに登録し忘れて、子どもに「なんで用意してくれなかったの？」</span>
+              <span class="lang-en">You forgot to add it to the calendar, and the kids ask why you didn’t prepare.</span>
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm overflow-hidden hover:overflow-visible hover:z-10 relative">
+            <span class="hover-zoom block rounded-xl overflow-visible"><img src="/products/PicSche/assets/problem/problem-share.png" alt="" class="w-full h-40 object-cover rounded-xl mb-4"/></span>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              <span class="lang-ja">家族で共有できない</span>
+              <span class="lang-en">Hard to share with family</span>
+            </h3>
+            <p class="text-gray-600 text-sm">
+              <span class="lang-ja">夫婦で予定がズレて、「聞いてない」が発生。ストレスの原因に。</span>
+              <span class="lang-en">Schedules get out of sync and “I didn’t know” causes stress.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="how-it-works" class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">
+          <span class="lang-ja">PicScheなら、すべて解決</span>
+          <span class="lang-en">PicSche solves it all</span>
+        </h2>
+        <div class="flex flex-wrap justify-center gap-8 mt-12 mb-12 items-end">
+          <div class="flex flex-col items-center text-center max-w-[160px]">
+            <span class="hover-zoom block"><img src="/products/PicSche/assets/steps/app-step-capture.png" alt="" class="lightbox-step-img w-28 rounded-2xl shadow-lg border border-gray-200 mb-3 object-cover object-top" style="aspect-ratio: 9/19.5;"/></span>
+            <span class="font-bold text-gray-900"><span class="lang-ja">撮影</span><span class="lang-en">Capture</span></span>
+            <span class="text-sm text-gray-600"><span class="lang-ja">お便りを写真に</span><span class="lang-en">Snap the flyer</span></span>
+          </div>
+          <span class="self-center text-gray-400">→</span>
+          <div class="flex flex-col items-center text-center max-w-[160px]">
+            <span class="hover-zoom block"><img src="/products/PicSche/assets/steps/app-step-ai.png" alt="" class="lightbox-step-img w-28 rounded-2xl shadow-lg border border-gray-200 mb-3 object-cover object-top" style="aspect-ratio: 9/19.5;"/></span>
+            <span class="font-bold text-gray-900"><span class="lang-ja">AI解析</span><span class="lang-en">AI reads</span></span>
+            <span class="text-sm text-gray-600"><span class="lang-ja">予定を自動抽出</span><span class="lang-en">Extracts events</span></span>
+          </div>
+          <span class="self-center text-gray-400">→</span>
+          <div class="flex flex-col items-center text-center max-w-[160px]">
+            <span class="hover-zoom block"><img src="/products/PicSche/assets/steps/app-step-select.png" alt="" class="lightbox-step-img w-28 rounded-2xl shadow-lg border border-gray-200 mb-3 object-cover object-top" style="aspect-ratio: 9/19.5;"/></span>
+            <span class="font-bold text-gray-900"><span class="lang-ja">選択</span><span class="lang-en">Select</span></span>
+            <span class="text-sm text-gray-600"><span class="lang-ja">必要なだけチェック</span><span class="lang-en">Pick what you need</span></span>
+          </div>
+          <span class="self-center text-gray-400">→</span>
+          <div class="flex flex-col items-center text-center max-w-[160px]">
+            <span class="hover-zoom block"><img src="/products/PicSche/assets/steps/app-step-register.png" alt="" class="lightbox-step-img w-28 rounded-2xl shadow-lg border border-gray-200 mb-3 object-cover object-top" style="aspect-ratio: 9/19.5;"/></span>
+            <span class="font-bold text-gray-900"><span class="lang-ja">登録</span><span class="lang-en">Register</span></span>
+            <span class="text-sm text-gray-600"><span class="lang-ja">カレンダーに一括登録</span><span class="lang-en">Add to calendar</span></span>
+          </div>
+        </div>
+        <div class="bg-gradient-to-r from-primary to-primary-dark rounded-2xl p-8 text-white text-center max-w-2xl mx-auto">
+          <p class="text-lg opacity-90 mb-1"><span class="lang-ja">手入力なら30分 → PicScheなら3分</span><span class="lang-en">30 min typing → 3 min with PicSche</span></p>
+          <p class="text-4xl font-black"><span class="lang-ja">約10倍の時短</span><span class="lang-en">~10x faster</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-16 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+          <span class="lang-ja">PicScheの主な機能</span>
+          <span class="lang-en">Key features</span>
+        </h2>
+        <div class="space-y-16">
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div class="bg-white rounded-2xl p-6 shadow-sm order-2 lg:order-1">
+              <span class="inline-block px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold mb-3"><span class="lang-ja">高精度認識</span><span class="lang-en">High accuracy</span></span>
+              <h3 class="text-xl font-bold text-gray-900 mb-3"><span class="lang-ja">手書きのほか様々な形式をAIが自動で認識</span><span class="lang-en">AI auto-recognizes handwriting and many other formats</span></h3>
+              <p class="text-gray-600 text-sm">
+                <span class="lang-ja">AIが手書き文字、表形式、月間カレンダー、様々な予定形式を読み取ります。1枚から多数の予定を抽出可能です。</span>
+                <span class="lang-en">AI reads handwriting, tables, monthly calendars, and various schedule formats. You can extract many events from a single image.</span>
+              </p>
+            </div>
+            <div class="order-1 lg:order-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-handwriting.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="max-height: 420px;"/>
+              </span>
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-handwriting-result.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="max-height: 420px;"/>
+              </span>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-calendar-select.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="max-height: 420px;"/>
+              </span>
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-calendar-month.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="max-height: 420px;"/>
+              </span>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+              <span class="inline-block px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold mb-3"><span class="lang-ja">iOS &amp; Android対応</span><span class="lang-en">iOS &amp; Android</span></span>
+              <h3 class="text-xl font-bold text-gray-900 mb-3"><span class="lang-ja">共有カレンダーに直接登録</span><span class="lang-en">Direct to your calendar</span></h3>
+              <p class="text-gray-600 text-sm">
+                <span class="lang-ja">iOSの標準カレンダー／Googleカレンダーに登録し、家族全員と予定を共有できます。</span>
+                <span class="lang-en">Add to iOS Calendar or Google Calendar and share with the whole family.</span>
+              </p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div class="bg-white rounded-2xl p-6 shadow-sm order-2 lg:order-1">
+              <h3 class="text-xl font-bold text-gray-900 mb-3"><span class="lang-ja">AIに注文をつけたい時も、カスタマイズ欄に書くだけ</span><span class="lang-en">Give the AI instructions in the customize field</span></h3>
+              <p class="text-gray-600 text-sm">
+                <span class="lang-ja">一部の予定だけが欲しいのに。。なんて時は、「運動会関連の予定だけ」など追加の依頼をカスタマイズ欄に記載すれば、AIがあなたの依頼に答えて、抽出結果をカスタマイズします。</span>
+                <span class="lang-en">When you only want some of the events, add instructions like “Only sports day events” in the customize field and the AI will tailor the extraction results to your request.</span>
+              </p>
+            </div>
+            <div class="order-1 lg:order-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-customize-input.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="min-height: 320px;"/>
+              </span>
+              <span class="hover-zoom block w-full max-w-[200px] flex-shrink-0">
+                <img src="/products/PicSche/assets/features/feature-customize-result.png" alt="" class="w-full h-auto object-contain rounded-2xl shadow-lg border border-gray-200" style="min-height: 320px;"/>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Supported formats -->
+    <section class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+          <span class="lang-ja">こんな画像に対応しています</span>
+          <span class="lang-en">Supported formats</span>
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-school-notice.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">学校からのお便り</span><span class="lang-en">Newsletters from school</span></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-monthly-table.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">月間行事予定表</span><span class="lang-en">Monthly calendars</span></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-lesson-schedule.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">習い事スケジュール</span><span class="lang-en">Lesson schedules</span></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-event-flyer.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">イベントチラシ</span><span class="lang-en">Event flyers</span></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-garbage-calendar.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">ゴミ出しカレンダー</span><span class="lang-en">Recycling calendars</span></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="/products/PicSche/assets/support/support-handwritten.png" alt="" class="w-full h-52 object-contain object-center bg-gray-50"/>
+            <div class="p-4 text-center"><span class="lang-ja">手書き予定表</span><span class="lang-en">Handwritten plans</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Security -->
+    <section class="py-16 bg-[#2C3E50] text-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          <span class="lang-ja">安心・安全への取り組み</span>
+          <span class="lang-en">Privacy &amp; security</span>
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <span class="material-icons-round text-6xl mb-4 block">lock</span>
+            <h3 class="font-bold text-lg mb-2"><span class="lang-ja">プライバシー第一</span><span class="lang-en">Privacy first</span></h3>
+            <p class="text-sm opacity-90"><span class="lang-ja">画像は予定抽出後すぐに削除。個人情報を保存しない設計。</span><span class="lang-en">Images deleted right after extraction. We don’t store personal data.</span></p>
+          </div>
+          <div class="text-center">
+            <span class="material-icons-round text-6xl mb-4 block">shield</span>
+            <h3 class="font-bold text-lg mb-2"><span class="lang-ja">セキュア通信</span><span class="lang-en">Secure connection</span></h3>
+            <p class="text-sm opacity-90"><span class="lang-ja">データ通信は全て暗号化。外部への情報漏洩なし。</span><span class="lang-en">All data is encrypted. No leakage to third parties.</span></p>
+          </div>
+          <div class="text-center">
+            <span class="material-icons-round text-6xl mb-4 block">check_circle</span>
+            <h3 class="font-bold text-lg mb-2"><span class="lang-ja">日本製</span><span class="lang-en">Made in Japan</span></h3>
+            <p class="text-sm opacity-90"><span class="lang-ja">日本の個人開発者が運営。サポートも日本語で対応。</span><span class="lang-en">Run by a Japanese indie developer. Support in Japanese.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">
+          <span class="lang-ja">料金プラン</span>
+          <span class="lang-en">Pricing</span>
+        </h2>
+        <p class="text-center text-gray-600 text-sm mb-12 max-w-2xl mx-auto">
+          <span class="lang-ja">無料で試して、足りなければ都度必要な分だけチャージできます</span>
+          <span class="lang-en">Try free, then charge as you need. No monthly fees.</span>
+        </p>
+        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-5xl mx-auto">
+          <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 flex flex-col">
+            <p class="text-sm font-bold text-gray-500 mb-2"><span class="lang-ja">まずはお試し</span><span class="lang-en">Try free</span></p>
+            <h3 class="text-xl font-bold text-gray-900 mb-1"><span class="lang-ja">無料</span><span class="lang-en">Free</span></h3>
+            <p class="text-3xl font-black text-gray-900 mb-4"><span class="lang-ja">¥0</span><span class="lang-en">Free</span></p>
+            <p class="text-sm text-gray-600 mb-4"><span class="lang-ja">初回2回まで</span><span class="lang-en">2 uses total</span></p>
+            <ul class="space-y-2 text-sm text-gray-600 flex-1 mb-6">
+              <li class="flex items-center gap-2"><span class="material-icons-round text-green-500 text-lg">check_circle</span> <span class="lang-ja">全機能</span><span class="lang-en">All features</span></li>
+              <li class="flex items-center gap-2"><span class="material-icons-round text-green-500 text-lg">check_circle</span> <span class="lang-ja">広告なし</span><span class="lang-en">No ads</span></li>
+            </ul>
+            <a href="#cta" class="block w-full py-3 rounded-xl border-2 border-gray-300 text-gray-700 font-bold text-center hover:bg-gray-100 transition"><span class="lang-ja">無料で試す</span><span class="lang-en">Try for free</span></a>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-emerald-200 flex flex-col relative">
+            <span class="absolute -top-3 right-4 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold"><span class="lang-ja">都度課金</span><span class="lang-en">Pay as you go</span></span>
+            <p class="text-sm font-bold text-emerald-600 mb-2"><span class="lang-ja">足りない分だけ</span><span class="lang-en">Just when you need more</span></p>
+            <h3 class="text-xl font-bold text-gray-900 mb-1"><span class="lang-ja">3回チャージ</span><span class="lang-en">3 Uses Charge</span></h3>
+            <p class="text-3xl font-black text-gray-900 mb-1"><span class="lang-ja">¥100</span><span class="lang-en">¥100</span></p>
+            <p class="text-sm text-gray-500 mb-4"><span class="lang-ja">1回あたり約¥33</span><span class="lang-en">About ¥33 per use</span></p>
+            <ul class="space-y-2 text-sm text-gray-600 flex-1 mb-6">
+              <li class="flex items-center gap-2"><span class="material-icons-round text-emerald-500 text-lg">check_circle</span> <span class="lang-ja">3回分が追加（期限なし）</span><span class="lang-en">+3 uses, no expiry</span></li>
+              <li class="flex items-center gap-2"><span class="material-icons-round text-emerald-500 text-lg">check_circle</span> <span class="lang-ja">サブスク不要・いつでも利用可能</span><span class="lang-en">No subscription, use anytime</span></li>
+            </ul>
+            <a href="#cta" class="block w-full py-3 rounded-xl bg-emerald-500 text-white font-bold text-center hover:bg-emerald-600 transition"><span class="lang-ja">無料で試す</span><span class="lang-en">Try for free</span></a>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-xl border-2 border-primary flex flex-col relative scale-105 z-10">
+            <span class="absolute -top-3 right-4 px-3 py-1 rounded-full bg-primary text-white text-xs font-bold"><span class="lang-ja">人気</span><span class="lang-en">Popular</span></span>
+            <p class="text-sm font-bold text-primary mb-2"><span class="lang-ja">まとめてお得に</span><span class="lang-en">Save more</span></p>
+            <h3 class="text-xl font-bold text-gray-900 mb-1"><span class="lang-ja">5回チャージ</span><span class="lang-en">5 Uses Charge</span></h3>
+            <p class="text-3xl font-black text-gray-900 mb-4"><span class="lang-ja">¥150</span><span class="lang-en">¥150</span></p>
+            <p class="text-sm text-gray-600 mb-4"><span class="lang-ja">1回あたり¥30</span><span class="lang-en">¥30 per use</span></p>
+            <ul class="space-y-2 text-sm text-gray-600 flex-1 mb-6">
+              <li class="flex items-center gap-2"><span class="material-icons-round text-primary text-lg">check_circle</span> <span class="lang-ja">5回分が追加（期限なし）</span><span class="lang-en">+5 uses, no expiry</span></li>
+              <li class="flex items-center gap-2"><span class="material-icons-round text-primary text-lg">check_circle</span> <span class="lang-ja">サブスク不要・いつでも利用可能</span><span class="lang-en">No subscription, use anytime</span></li>
+            </ul>
+            <a href="#cta" class="block w-full py-3 rounded-xl bg-primary text-white font-bold text-center hover:bg-primary-dark transition"><span class="lang-ja">無料で試す</span><span class="lang-en">Try for free</span></a>
+          </div>
+        </div>
+        <p class="text-center text-sm text-gray-500 mt-6"><span class="lang-ja">※初回2回無料のあと、必要な分だけチャージしてご利用いただけます。</span><span class="lang-en">2 free uses, then charge as you need.</span></p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+          <span class="lang-ja">よくある質問</span>
+          <span class="lang-en">FAQ</span>
+        </h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+            <summary class="p-4 font-bold cursor-pointer flex justify-between items-center">
+              <span class="lang-ja">どんな画像に対応していますか？</span>
+              <span class="lang-en">What images are supported?</span>
+              <span class="material-icons-round text-gray-400">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-gray-600 text-sm">
+              <span class="lang-ja">学校からのお便り、月間カレンダー、習い事のスケジュール、イベントチラシ、ゴミ出しカレンダー、手書きの予定表など、幅広い画像に対応しています。</span>
+              <span class="lang-en">School flyers, monthly calendars, lesson schedules, event flyers, recycling calendars, handwritten plans, and more.</span>
+            </div>
+          </details>
+          <details class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+            <summary class="p-4 font-bold cursor-pointer flex justify-between items-center">
+              <span class="lang-ja">iOS版とAndroid版で機能に違いはありますか？</span>
+              <span class="lang-en">Any difference between iOS and Android?</span>
+              <span class="material-icons-round text-gray-400">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-gray-600 text-sm">
+              <span class="lang-ja">基本機能は同じです。iOS版は標準カレンダーに、Android版は端末のカレンダー（Googleカレンダー等）に直接登録できます。料金も同じで、どちらも初回2回無料のあとチャージ制です。</span>
+              <span class="lang-en">Core features are the same. iOS uses the system calendar; Android uses device calendar (e.g. Google Calendar). Both offer 2 free uses, then charge-only.</span>
+            </div>
+          </details>
+          <details class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+            <summary class="p-4 font-bold cursor-pointer flex justify-between items-center">
+              <span class="lang-ja">手書きの文字も読み取れますか？</span>
+              <span class="lang-en">Does it read handwriting?</span>
+              <span class="material-icons-round text-gray-400">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-gray-600 text-sm">
+              <span class="lang-ja">はい、手書き文字にも対応しています。</span>
+              <span class="lang-en">Yes, we support handwriting.</span>
+            </div>
+          </details>
+          <details class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+            <summary class="p-4 font-bold cursor-pointer flex justify-between items-center">
+              <span class="lang-ja">個人情報は安全ですか？</span>
+              <span class="lang-en">Is my data safe?</span>
+              <span class="material-icons-round text-gray-400">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-gray-600 text-sm">
+              <span class="lang-ja">画像は予定抽出後すぐに削除され、サーバーに保存されません。氏名や住所などの個人情報は意図的に抽出しない設計です。</span>
+              <span class="lang-en">Images are deleted right after extraction and are not stored. We don’t extract names or addresses.</span>
+            </div>
+          </details>
+          <details class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+            <summary class="p-4 font-bold cursor-pointer flex justify-between items-center">
+              <span class="lang-ja">月額課金（サブスクリプション）ですか？</span>
+              <span class="lang-en">Is there a monthly subscription?</span>
+              <span class="material-icons-round text-gray-400">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-gray-600 text-sm">
+              <span class="lang-ja">いいえ。iOS・Androidとも月額課金はありません。初回2回まで無料で、その後は必要な分だけチャージしてご利用いただけます。</span>
+              <span class="lang-en">No. Both iOS and Android have no subscription. 2 free uses, then charge as you need.</span>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="cta" class="py-20 bg-gradient-to-r from-primary to-indigo-600 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl font-black mb-4">
+          <span class="lang-ja">今すぐPicScheで時短を実現</span>
+          <span class="lang-en">Save time with PicSche today</span>
+        </h2>
+        <p class="text-xl opacity-90 mb-8">
+          <span class="lang-ja">学校からのお便り入力から解放される生活、今日から始めませんか？</span>
+          <span class="lang-en">Start freeing yourself from typing school flyers today.</span>
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6 items-center">
+          <a href="#" class="inline-flex items-center justify-center rounded-xl bg-gray-900 text-white font-bold shadow-lg hover:opacity-90 transition p-2 shrink-0">
+            <span class="store-badge-wrap"><img src="/products/PicSche/assets/store/app-store-badge.svg" alt="Download on the App Store"/></span>
+          </a>
+          <a href="#" class="inline-flex items-center justify-center rounded-xl bg-white text-primary font-bold shadow-lg hover:bg-gray-100 transition p-2 shrink-0">
+            <span class="store-badge-wrap store-badge-wrap--google"><img src="/products/PicSche/assets/store/google-play-badge.png" alt="Get it on Google Play"/></span>
+          </a>
+        </div>
+        <p class="text-sm text-white/80"><span class="lang-ja">初回2回無料｜iOS 18.0以降 / Android 8.0以降に対応</span><span class="lang-en">2 free uses. iOS 18.0+ / Android 8.0+</span></p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1A1A1A] text-gray-400 py-12">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div class="flex items-center gap-2">
+            <div class="h-8 w-8 rounded-full overflow-hidden bg-white/10 ring-1 ring-white/20 flex-shrink-0">
+              <img src="/products/PicSche/assets/store/icon.png?v=2" alt="PicSche" class="w-full h-full object-contain"/>
+            </div>
+            <span class="font-bold text-white">PicSche</span>
+          </div>
+          <p class="text-sm">© 2026 PicSche by CloudCrowd. <span class="lang-ja">All rights reserved.</span><span class="lang-en">All rights reserved.</span></p>
+          <nav class="flex gap-6 text-sm">
+            <a href="/products/PicSche/term" class="hover:text-white transition"><span class="lang-ja">利用規約</span><span class="lang-en">Terms</span></a>
+            <a href="/products/PicSche/privacy" class="hover:text-white transition"><span class="lang-ja">プライバシーポリシー</span><span class="lang-en">Privacy</span></a>
+            <a href="/products/PicSche/tokusho/" class="hover:text-white transition"><span class="lang-ja">特定商取引法に基づく表記</span><span class="lang-en">Legal</span></a>
+            <a href="/products/PicSche/support" class="hover:text-white transition"><span class="lang-ja">お問い合わせ</span><span class="lang-en">Contact</span></a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ライトボックス: 画像クリックで別枠に大きく表示 -->
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4" aria-hidden="true" role="dialog" aria-label="画像を拡大表示">
+      <div id="lightbox-backdrop" class="absolute inset-0 bg-black/75" tabindex="-1"></div>
+      <img id="lightbox-img" src="" alt="" class="relative z-10 rounded-xl shadow-2xl pointer-events-none"/>
+      <button type="button" id="lightbox-close" class="absolute top-4 right-4 z-20 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-gray-800 flex items-center justify-center text-2xl font-light shadow-lg transition" aria-label="閉じる">×</button>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      var stored = localStorage.getItem('picsche-lp-lang') || 'ja';
+      document.documentElement.lang = stored;
+
+      var titles = { ja: 'PicSche（ピクスケ）- 学校のお便りを撮るだけでカレンダーに自動登録 | iOS & Android対応', en: 'PicSche - School Schedules to Calendar in One Shot | iOS & Android' };
+      function setLang(lang) {
+        document.documentElement.lang = lang;
+        document.title = titles[lang] || titles.ja;
+        localStorage.setItem('picsche-lp-lang', lang);
+        document.querySelectorAll('.lang-switch').forEach(function(btn) {
+          var isActive = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('bg-primary', isActive);
+          btn.classList.toggle('text-white', isActive);
+          btn.classList.toggle('text-gray-600', !isActive);
+          btn.classList.toggle('hover:bg-gray-100', !isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      document.querySelectorAll('.lang-switch').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setLang(this.getAttribute('data-lang'));
+        });
+      });
+
+      setLang(stored);
+
+      // ライトボックス: .hover-zoom 内の画像クリックで別枠に大きく表示。ステップ画像は矢印キーで前後切り替え
+      (function() {
+        var lb = document.getElementById('lightbox');
+        var lbImg = document.getElementById('lightbox-img');
+        var lbBackdrop = document.getElementById('lightbox-backdrop');
+        var lbClose = document.getElementById('lightbox-close');
+        var stepSrcs = [];
+        var currentStepIndex = -1;
+
+        function openLightbox(src, stepIndex, stepSrcList) {
+          lbImg.src = src;
+          stepSrcs = stepSrcList || [];
+          currentStepIndex = stepIndex >= 0 ? stepIndex : -1;
+          lb.classList.remove('hidden');
+          lb.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+          lb.classList.add('hidden');
+          lb.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          stepSrcs = [];
+          currentStepIndex = -1;
+        }
+        function showStep(index) {
+          if (stepSrcs.length === 0 || index < 0 || index >= stepSrcs.length) return;
+          currentStepIndex = index;
+          lbImg.src = stepSrcs[index];
+        }
+
+        document.querySelectorAll('.hover-zoom img').forEach(function(img) {
+          img.closest('.hover-zoom').addEventListener('click', function(e) {
+            e.preventDefault();
+            var steps = Array.prototype.slice.call(document.querySelectorAll('.lightbox-step-img')).map(function(el) { return el.src; });
+            var idx = steps.indexOf(img.src);
+            openLightbox(img.src, idx, steps.length ? steps : null);
+          });
+        });
+        lbBackdrop.addEventListener('click', closeLightbox);
+        lbClose.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', function(e) {
+          if (lb.classList.contains('hidden')) return;
+          if (e.key === 'Escape') { closeLightbox(); return; }
+          if (stepSrcs.length > 0) {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); showStep((currentStepIndex - 1 + stepSrcs.length) % stepSrcs.length); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); showStep((currentStepIndex + 1) % stepSrcs.length); }
+          }
+        });
+      })();
+    })();
+  </script>
+</body>
+</html>

@@ -12,8 +12,6 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { PersonalProduct } from '@/types/product';
 
-const PICSCHE_LP_URL = 'https://se-like.github.io/PicSche_LP/';
-
 const products: PersonalProduct[] = [
   {
     id: 'picsche',
@@ -24,7 +22,7 @@ const products: PersonalProduct[] = [
     imageUrl: '/images/products/picsche-banner.png',
     iconUrl: '/images/products/picsche-icon.png',
     technologies: ['AI', '画像認識', 'iOS', 'Android', '個人開発'],
-    productUrl: PICSCHE_LP_URL,
+    productUrl: '/products/PicSche',
   },
 ];
 
@@ -42,8 +40,6 @@ export default function PersonalProductsSection() {
           <a
             key={product.id}
             href={product.productUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             className="project-card card-hover block cursor-pointer no-underline text-inherit product-card"
           >
             <div className="project-image-container product-card-image-container">

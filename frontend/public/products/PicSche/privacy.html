@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PicSche - プライバシーポリシー</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+      color: #333;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      background: #f8fafc;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 16px;
+      color: #1e293b;
+    }
+    .updated { font-size: 0.85rem; color: #64748b; margin-bottom: 16px; }
+    .section {
+      margin-bottom: 24px;
+    }
+    .section h2 {
+      font-size: 1rem;
+      margin: 0 0 8px;
+      color: #334155;
+    }
+    .section p {
+      margin: 0;
+      white-space: pre-line;
+    }
+    .footer {
+      margin-top: 32px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    .lang-switcher {
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      color: #64748b;
+    }
+    .lang-switcher a { color: #3b82f6; text-decoration: none; }
+    .lang-switcher a:hover { text-decoration: underline; }
+    a { color: #3b82f6; }
+  </style>
+</head>
+<body data-title-ja="PicSche - プライバシーポリシー" data-title-en="PicSche - Privacy Policy">
+  <div class="card">
+    <p class="lang-switcher"><a href="?lang=ja" data-lang="ja">日本語</a> | <a href="?lang=en" data-lang="en">English</a></p>
+    <div class="lang-ja">
+    <h1>プライバシーポリシー</h1>
+    <p class="updated">最終更新：2026年2月23日</p>
+    <p>PicSche（以下「本アプリ」）は、ユーザーの皆様のプライバシーを尊重し、個人情報の保護に最大限配慮しています。本プライバシーポリシーでは、本アプリがどのような情報を収集し、どのように利用・保護するかについて説明します。</p>
+
+    <div class="section">
+      <h2>【1. 収集する情報】</h2>
+      <p>本アプリは以下の情報にアクセスします：
+
+(1) カメラ・写真ライブラリ
+目的：予定情報が記載された画像（学校のプリント、イベントチラシ等）を選択・撮影するため
+保存：画像は予定抽出後、直ちに削除され、本アプリ内には保存されません
+
+(2) カレンダー
+目的：抽出した予定情報をiOSカレンダーに登録するため
+保存：予定情報はiOS標準カレンダーアプリに保存され、本アプリ独自のサーバーには保存されません
+
+(3) 画像内のテキスト情報
+目的：AI解析により予定情報（タイトル、日時、場所等）を抽出するため
+保存：抽出された予定情報は一時的にメモリに保持され、カレンダー登録後は削除されます
+
+(4) プッシュ通知用デバイス識別子
+目的：解析完了時に「解析が完了しました！」とプッシュ通知を送るため
+保存：Google LLC が提供するクラウドサービスに、端末識別用のIDと紐づけて保存されます。トークンは更新時に上書きされます。
+無効化：iOS の「設定」→「通知」→「PicSche」で通知をオフにすると、本アプリは新規の識別子登録を行いません。既に保存された識別子は、アプリ削除時などに当方の記録から削除されます。</p>
+    </div>
+
+    <div class="section">
+      <h2>【2. 第三者サービスの利用】</h2>
+      <p>本アプリは、画像から予定情報を高精度で抽出するため、外部のAI解析サービスを利用しています。
+
+(1) 送信される情報
+・ユーザーが選択・撮影した画像
+・画像解析のための指示（「カスタマイズ欄」で入力したテキストを含みます）
+・無料プランでは利用回数を当方のサーバーで管理する場合があります。端末識別用のID（個人を特定しないランダムな文字列）を送信し、利用回数・対象月を当方のサーバーに保存することがあります。
+・利用状況および購入に関する記録を当方のシステムに保存することがあります。不正防止およびサービス運営に必要な範囲で一定期間保持します。
+
+(2) 送信目的
+予定情報（タイトル、日時、場所、補足事項）をAIによって自動抽出するため
+
+(3) カスタマイズ欄について
+カスタマイズ欄で入力した内容は、そのままAI解析サービスに送信されます。個人情報（氏名・住所・電話番号・メールアドレス等）や機密情報を入力しないようご注意ください。入力は500文字までに制限されています。
+
+(4) 利用するAIサービス
+本アプリは、画像から予定情報を抽出するために、以下のいずれか1つのAI解析サービスを利用します：
+・Anthropic Claude（https://www.anthropic.com/privacy）
+・OpenAI GPT-4o（https://openai.com/privacy）
+・Google Gemini（https://policies.google.com/privacy）
+・Google Cloud の AI サービス（当方が運用するサーバー経由で利用。https://cloud.google.com/terms/cloud-privacy-notice）
+
+利用するサービスは、アプリのバージョンにより異なります。機能向上のため、対応サービスが予告なく変更される場合があります。
+
+(5) データの取り扱い
+・画像は解析完了後、直ちにサーバーから削除されます
+・各AIサービス提供者のプライバシーポリシーに従って処理されます
+・本アプリは、AIサービス提供者に対し、ユーザーデータを学習目的で使用しないよう設定しています
+
+(6) 個人情報の保護
+本アプリは、画像に含まれる可能性のある個人を特定できる情報（氏名、住所、電話番号等）を抽出しないよう努めています。ただし、画像内に含まれる情報の性質上、完全に防ぐことは保証できません。
+
+(7) プッシュ通知（Google のクラウドサービス）
+本アプリは、画像解析が完了した際にプッシュ通知をお届けするため、Google LLC が提供するクラウドサービスを利用しています。
+
+・収集・保存される情報：デバイスに紐づく識別子、解析完了の記録（日時、利用量の概算等）
+・利用目的：解析完了の通知送信、利用状況の集計・分析
+・Google のプライバシー：https://firebase.google.com/support/privacy
+・通知をオフにした場合、新規の識別子登録は行いません。
+
+(8) 広告
+本アプリでは広告を表示していません。</p>
+    </div>
+
+    <div class="section">
+      <h2>【3. 情報の利用目的】</h2>
+      <p>収集した情報は以下の目的でのみ利用します：
+・画像から予定情報を抽出する
+・抽出した予定をカレンダーに登録する
+・アプリの機能向上および不具合の修正
+
+本アプリは、以下の目的では情報を利用しません：
+・ユーザー行動の追跡
+・第三者への販売・提供（AI解析利用を除く）</p>
+    </div>
+
+    <div class="section">
+      <h2>【4. データの保持期間】</h2>
+      <p>・画像データ：解析後即座に削除（保持期間：数秒）
+・抽出された予定情報：カレンダー登録後、アプリ内から削除
+・カレンダーに登録された予定：iOSカレンダーアプリに保存（ユーザーが削除するまで保持）
+
+本アプリは、画像や予定本文をサーバーに保存しません。ただし、以下を当方のサーバーまたはクラウドに保存・保持することがあります：
+・無料プランの利用回数管理を行う場合：利用回数・対象月を、端末識別用のIDと紐づけて当方のサーバーに保存することがあります
+・プッシュ通知：デバイス識別子および解析完了記録を Google のクラウドサービスに保存
+・利用・購入に関する記録：不正防止およびサービス運営のため、当方のシステムに一定期間保持することがあります</p>
+    </div>
+
+    <div class="section">
+      <h2>【5. データの共有】</h2>
+      <p>本アプリは、以下の場合を除き、ユーザーの情報を第三者と共有しません：
+・法令に基づく開示が必要な場合
+・ユーザーの同意がある場合
+・上記「第三者サービスの利用」に記載されたAI解析サービスの利用</p>
+    </div>
+
+    <div class="section">
+      <h2>【6. セキュリティ】</h2>
+      <p>本アプリは、ユーザー情報を保護するため、以下の対策を実施しています：
+・画像の一時的な保持のみ（永続的な保存なし）
+・通信の暗号化
+・アプリ内データの最小化
+・AI学習への利用を禁止する設定</p>
+    </div>
+
+    <div class="section">
+      <h2>【7. ユーザーの権利】</h2>
+      <p>ユーザーは以下の権利を有します：
+・カメラ・写真・カレンダー・通知へのアクセス許可の取り消し（iOS設定から可能）
+・本アプリの削除（すべてのアプリデータが削除されます）
+・カレンダーに登録された予定の削除（iOSカレンダーアプリから可能）</p>
+    </div>
+
+    <div class="section">
+      <h2>【8. 子供のプライバシー】</h2>
+      <p>本アプリは13歳未満のお子様を対象としていません。13歳未満のお子様が本アプリを利用する場合は、保護者の同意と監督のもとでご利用ください。</p>
+    </div>
+
+    <div class="section">
+      <h2>【9. プライバシーポリシーの変更】</h2>
+      <p>本プライバシーポリシーは、法令の変更やアプリ機能の追加に伴い、予告なく変更される場合があります。重要な変更がある場合は、アプリ内で通知します。</p>
+    </div>
+
+    <div class="section">
+      <h2>【10. お問い合わせ】</h2>
+      <p>本プライバシーポリシーに関するご質問やご意見は、以下までお問い合わせください：
+メールアドレス：mkoji530@gmail.com</p>
+    </div>
+
+    <div class="section">
+      <h2>【11. 準拠法】</h2>
+      <p>本プライバシーポリシーは日本法に準拠し、解釈されます。</p>
+    </div>
+
+    <p class="footer">© 2026 CloudCrowd　PicSche開発者：CloudCrowd</p>
+    <p class="footer"><a href="support">サポート・お問い合わせ</a> | <a href="term">利用規約</a></p>
+    </div>
+    <div class="lang-en" style="display: none;">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: February 23, 2026</p>
+    <p>PicSche (pronounced "Pikuske"; "this app") respects your privacy and takes the protection of personal information seriously. This Privacy Policy explains what information we collect and how we use and protect it.</p>
+    <div class="section">
+      <h2>1. Information We Collect</h2>
+      <p>This app accesses the following information:
+
+(1) Camera &amp; Photo Library
+Purpose: To select or capture images containing schedule information (e.g., school handouts, event flyers)
+Storage: Images are deleted immediately after schedule extraction and are not stored within the app
+
+(2) Calendar
+Purpose: To register extracted schedule information to your iOS calendar
+Storage: Schedule information is saved to the iOS Calendar app and not to our own servers
+
+(3) Text in Images
+Purpose: To extract schedule information (title, date, location, etc.) via AI analysis
+Storage: Extracted information is temporarily held in memory and deleted after calendar registration
+
+(4) Push Notification Device Identifier
+Purpose: To send a push notification when analysis is complete (e.g., "Analysis complete!")
+Storage: Stored with a device identifier in a cloud service provided by Google LLC. Tokens are overwritten on update.
+Disabling: If you turn off notifications for PicSche in iOS Settings → Notifications, we will not register new identifiers. Existing identifiers will be removed from our records when you delete the app.</p>
+    </div>
+    <div class="section">
+      <h2>2. Third-Party Services</h2>
+      <p>This app uses external AI analysis services to accurately extract schedule information from images.
+
+(1) Information Sent
+・Images selected or captured by the user
+・Instructions for image analysis (including text you enter in the "customization" field)
+・For free-tier usage we may manage usage on our server and send a device identifier; usage count and the relevant month may be stored on our server.
+・We may save usage and purchase-related records to our systems. We retain them for a certain period as needed for fraud prevention and service operation.
+
+(2) Purpose of Transmission
+To automatically extract schedule information (title, date, location, notes) via AI
+
+(3) About the Image Context Field
+Content you enter in the customization field is sent to the selected AI provider as-is. Please do not enter personal information (name, address, phone number, email, etc.) or confidential information. Input is limited to 500 characters.
+
+(4) AI Services Used
+This app uses one of the following for AI analysis (depending on the app version):
+・Anthropic Claude (https://www.anthropic.com/privacy)
+・OpenAI GPT-4o (https://openai.com/privacy)
+・Google Gemini (https://policies.google.com/privacy)
+・Google Cloud AI (via our server; https://cloud.google.com/terms/cloud-privacy-notice)
+
+Supported services may change without notice for improved functionality.
+
+(5) Data Handling
+・Images are deleted from the server immediately after analysis
+・Processed in accordance with each AI service provider's privacy policy
+・We configure so that AI providers do not use user data for training
+
+(6) Protection of Personal Information
+We strive not to extract personally identifiable information (name, address, phone number, etc.) that may appear in images. We cannot guarantee complete prevention given the nature of image content.
+
+(7) Push Notifications (Google)
+We use a cloud service from Google LLC to send push notifications when analysis is complete.
+・Information stored: device identifier, analysis completion records
+・Google privacy: https://firebase.google.com/support/privacy
+・If you disable notifications, we do not register new identifiers.
+
+(8) Advertising
+This app does not display ads.</p>
+    </div>
+    <div class="section">
+      <h2>3. Purpose of Use</h2>
+      <p>Collected information is used only for:
+・Extracting schedule information from images
+・Registering extracted schedules to the calendar
+・Improving app functionality and fixing defects
+
+This app does NOT use information for:
+・User behavior tracking
+・Selling or providing data to third parties (except AI analysis use)</p>
+    </div>
+    <div class="section">
+      <h2>4. Data Retention</h2>
+      <p>・Image data: Deleted immediately after analysis (retention: seconds)
+・Extracted schedule information: Deleted from the app after calendar registration
+・Registered calendar events: Stored in the iOS Calendar app (until the user deletes them)
+
+This app does not store images or schedule content on servers. We may store or retain the following: free-tier usage (usage count and month linked to a device identifier); push notification identifiers on Google's service; usage and purchase-related records in our systems for a certain period for fraud prevention and service operation.</p>
+    </div>
+    <div class="section">
+      <h2>5. Data Sharing</h2>
+      <p>We do not share your information with third parties except:
+・When required by law
+・When you have given consent
+・As described in "Third-Party Services" (AI analysis use) above</p>
+    </div>
+    <div class="section">
+      <h2>6. Security</h2>
+      <p>We implement the following to protect your information:
+・Temporary storage of images only (no permanent storage)
+・Encrypted communication
+・Minimization of in-app data
+・Configuration to prohibit use of data for AI training</p>
+    </div>
+    <div class="section">
+      <h2>7. Your Rights</h2>
+      <p>You have the right to:
+・Revoke access to camera, photos, calendar, and notifications (via iOS Settings)
+・Delete the app (all app data will be removed)
+・Delete calendar events (via the iOS Calendar app)</p>
+    </div>
+    <div class="section">
+      <h2>8. Children's Privacy</h2>
+      <p>This app is not intended for children under 13. If a child under 13 uses this app, it should be with parental consent and supervision.</p>
+    </div>
+    <div class="section">
+      <h2>9. Changes to This Policy</h2>
+      <p>This Privacy Policy may be changed without notice due to legal changes or app updates. Significant changes will be notified within the app.</p>
+    </div>
+    <div class="section">
+      <h2>10. Contact</h2>
+      <p>For questions or feedback regarding this Privacy Policy, please contact:
+Email: mkoji530@gmail.com</p>
+    </div>
+    <div class="section">
+      <h2>11. Governing Law</h2>
+      <p>This Privacy Policy is governed by and construed in accordance with the laws of Japan.</p>
+    </div>
+    <p class="footer">© 2026 CloudCrowd　PicSche Developer: CloudCrowd</p>
+    <p class="footer"><a href="support">Support &amp; Contact</a> | <a href="term">Terms of Service</a></p>
+    </div>
+  </div>
+  <script src="lang-switcher.js"></script>
+</body>
+</html>

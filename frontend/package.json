@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:picsche-css && next build",
+    "build:picsche-css": "tailwindcss -i ./styles/picsche.css -o ./public/products/PicSche/picsche.css -c ./tailwind.picsche.config.js --minify",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
