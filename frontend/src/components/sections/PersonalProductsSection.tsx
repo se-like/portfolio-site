@@ -22,7 +22,7 @@ const products: PersonalProduct[] = [
     imageUrl: '/images/products/picsche-banner.png',
     iconUrl: '/images/products/picsche-icon.png',
     technologies: ['AI', '画像認識', 'iOS', 'Android', '個人開発'],
-    productUrl: '/products/PicSche',
+    productUrl: '/products/picsche',
   },
 ];
 

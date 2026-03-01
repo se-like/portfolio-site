@@ -8,12 +8,12 @@ const PICSCHE_HTML_HEADERS = {
   "X-Frame-Options": "SAMEORIGIN",
 } as const;
 
-/** public/products/PicSche の絶対パス（Route Handler から HTML を読む用） */
+/** public/products/picsche の絶対パス（Route Handler から HTML を読む用） */
 export const PICSCHE_PUBLIC_ROOT = path.join(
   process.cwd(),
   "public",
   "products",
-  "PicSche"
+  "picsche"
 );
 
 /** 404 用の最小 HTML（Content-Type: text/html と整合） */

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run build:picsche-css && next build",
-    "build:picsche-css": "tailwindcss -i ./styles/picsche.css -o ./public/products/PicSche/picsche.css -c ./tailwind.picsche.config.js --minify",
+    "build:picsche-css": "tailwindcss -i ./styles/picsche.css -o ./public/products/picsche/picsche.css -c ./tailwind.picsche.config.js --minify",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",

@@ -1,6 +1,6 @@
 /** PicSche 用 Tailwind ビルド（LP・法定ページのクラスをすべて含む） */
 module.exports = {
-  content: ['./public/products/PicSche/**/*.html'],
+  content: ['./public/products/picsche/**/*.html'],
   theme: {
     extend: {
       colors: {

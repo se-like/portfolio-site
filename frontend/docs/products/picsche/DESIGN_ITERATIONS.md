@@ -17,7 +17,7 @@
 ## 反復 2: 404 と tokusho の統一
 
 - 404 は最小限の HTML（`<!DOCTYPE html>...`）を返し、Content-Type を text/html のまま正しい文書にする。
-- tokusho/index.html は CDN をやめ、LP と同様に `/products/PicSche/picsche.css`（または base からの相対）を参照する。Tailwind の content に tokusho が含まれているので、静的 CSS でスタイルは出る。
+- tokusho/index.html は CDN をやめ、LP と同様に `/products/picsche/picsche.css`（または base からの相対）を参照する。Tailwind の content に tokusho が含まれているので、静的 CSS でスタイルは出る。
 
 **結論**: 404 を HTML 化。tokusho を CDN 廃止・picsche.css 参照に変更。
 
@@ -25,11 +25,11 @@
 
 ## 反復 3: トレイリングスラッシュの一貫性
 
-- 現状は LP のみ `/products/PicSche/` → `/products/PicSche` に 308 している。
-- `/products/PicSche/term/` などは未対応で、環境によっては 404 になる可能性がある。
+- 現状は LP のみ `/products/picsche/` → `/products/picsche` に 308 している。
+- `/products/picsche/term/` などは未対応で、環境によっては 404 になる可能性がある。
 - 方針: すべての PicSche パスでトレイリングスラッシュを付けない形に正規化する（308 リダイレクト）。Middleware で一括処理する。
 
-**結論**: Middleware で `/products/PicSche` および `/products/PicSche/*` の末尾スラッシュを 308 で除去。
+**結論**: Middleware で `/products/picsche` および `/products/picsche/*` の末尾スラッシュを 308 で除去。
 
 ---
 
@@ -39,14 +39,14 @@
 - 新規ページ追加時に route を 1 本ずつ増やすと漏れや重複が起きやすい。
 - 方針: 1 本の Route Handler `[[...slug]]` で受け、slug に応じてファイルと base を決める。追加はマッピング 1 行で済む。
 
-**結論**: `app/products/PicSche/[[...slug]]/route.ts` に集約。slug が空なら index、`term` なら term.html、`tokusho` なら tokusho/index.html + base など。存在しない slug は 404。
+**結論**: `app/products/picsche/[[...slug]]/route.ts` に集約。slug が空なら index、`term` なら term.html、`tokusho` なら tokusho/index.html + base など。存在しない slug は 404。
 
 ---
 
 ## 反復 5: 正規 URL（canonical）の明示
 
 - LP は検索エンジン向けに canonical を出した方がよい。
-- 挿入場所: `<head>` 内。`NEXT_PUBLIC_SITE_URL` や定数でベース URL を決め、`<link rel="canonical" href="{SITE_URL}/products/PicSche">` を挿入する。
+- 挿入場所: `<head>` 内。`NEXT_PUBLIC_SITE_URL` や定数でベース URL を決め、`<link rel="canonical" href="{SITE_URL}/products/picsche">` を挿入する。
 - 法定ページは必要に応じて同様にできるが、まずは LP のみで十分とする。
 
 **結論**: LP 返却時に canonical を 1 本挿入。ベース URL は環境変数または定数（デフォルト https://www.cloudcrowd.cloud）。
@@ -92,7 +92,7 @@
 
 ## 反復 10: 最終チェック
 
-- 単一ソース: public/products/PicSche/ のみ。✓
+- 単一ソース: public/products/picsche/ のみ。✓
 - HTML は Route Handler 1 本で返す。✓
 - CSS は LP も tokusho も静的 picsche.css。✓
 - 404 は HTML、トレイリングスラッシュは 308、canonical は LP に注入。✓

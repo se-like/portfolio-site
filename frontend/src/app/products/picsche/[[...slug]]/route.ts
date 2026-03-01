@@ -17,12 +17,12 @@ const SLUG_MAP: Record<
   string,
   { file: string; base: string }
 > = {
-  term: { file: "term.html", base: "/products/PicSche/" },
-  privacy: { file: "privacy.html", base: "/products/PicSche/" },
-  support: { file: "support.html", base: "/products/PicSche/" },
+  term: { file: "term.html", base: "/products/picsche/" },
+  privacy: { file: "privacy.html", base: "/products/picsche/" },
+  support: { file: "support.html", base: "/products/picsche/" },
   tokusho: {
     file: path.join("tokusho", "index.html"),
-    base: "/products/PicSche/tokusho/",
+    base: "/products/picsche/tokusho/",
   },
 };
 
@@ -39,7 +39,7 @@ export async function GET(
         path.join(PICSCHE_PUBLIC_ROOT, "index.html"),
         "utf-8"
       );
-      html = injectCanonical(html, `${SITE_URL}/products/PicSche`);
+      html = injectCanonical(html, `${SITE_URL}/products/picsche`);
       return htmlResponse(html);
     } catch (e) {
       console.error(e);

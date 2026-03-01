@@ -5,17 +5,17 @@ import type { NextRequest } from "next/server";
 function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   if (
-    pathname.startsWith("/products/PicSche/") &&
-    pathname.length > "/products/PicSche/".length &&
+    pathname.startsWith("/products/picsche/") &&
+    pathname.length > "/products/picsche/".length &&
     pathname.endsWith("/")
   ) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.slice(0, -1);
     return NextResponse.redirect(url, 308);
   }
-  if (pathname === "/products/PicSche/") {
+  if (pathname === "/products/picsche/") {
     const url = request.nextUrl.clone();
-    url.pathname = "/products/PicSche";
+    url.pathname = "/products/picsche";
     return NextResponse.redirect(url, 308);
   }
   return NextResponse.next();
