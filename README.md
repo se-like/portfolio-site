@@ -27,8 +27,9 @@ Next.js/Reactで構築されたフリーランスシステムエンジニア向�
 1. リポジトリをクローンまたはダウンロードします
 2. フロントエンドディレクトリに移動します:
    ```bash
-   cd portfolio-site/frontend
+   cd frontend
    ```
+   （リポジトリルートで実行する場合）
 3. 依存関係をインストールします:
    ```bash
    npm install

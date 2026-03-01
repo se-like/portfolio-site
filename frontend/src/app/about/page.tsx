@@ -221,7 +221,7 @@ export default function AboutPage() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch('/projects.json')
+    fetch('/api/projects')
       .then(res => res.json())
       .then(setData)
       .catch(setError);

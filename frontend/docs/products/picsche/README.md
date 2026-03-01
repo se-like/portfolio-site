@@ -22,7 +22,7 @@ CloudCrowd 本サイト（https://www.cloudcrowd.cloud）の配下で、PicSche 
 - **CSS は静的ビルド**: LP も tokusho も Tailwind CDN に頼らず、ビルド時に `public/products/picsche/picsche.css` を生成し、両方から参照する。
 - **リンクは絶対パス（LP）**: LP 内のリンク・アセットは `/products/picsche/...` で統一する。法定ページは `<base>` で相対パスを解決する。
 - **セキュリティヘッダー**: 返す HTML に `X-Content-Type-Options`, `X-Frame-Options` を付与する。
-- **トレイリングスラッシュ**: Middleware で `/products/picsche/` および `/products/picsche/xxx/` を 308 で「末尾なし」に正規化する。
+- **トレイリングスラッシュ**: next.config の `trailingSlash: false` により、Next.js が末尾スラッシュを除去して正規 URL にリダイレクトする。middleware では行わない。
 - **404**: 存在しない slug や読み込み失敗時は、最小限の HTML（`NOT_FOUND_HTML`）を 404 で返す（Content-Type は text/html のまま）。
 - **canonical**: LP 返却時に `<link rel="canonical" href="{SITE_URL}/products/picsche">` を挿入する。`SITE_URL` は `NEXT_PUBLIC_SITE_URL` または既定値。
 
@@ -43,8 +43,9 @@ public/products/picsche/
 
 ## 4. ルーティング
 
+- **正規 URL**: すべて小文字の `/products/picsche` および `/products/picsche/{term|privacy|support|tokusho}` のみ有効とする。大文字混じり（例: `/products/PicSche`）でのアクセスは 404 とする（URL は全て小文字に統一し、大文字からのリダイレクトは行わない）。
 - **Route Handler**: `GET /products/picsche` および `GET /products/picsche/{term|privacy|support|tokusho}` はすべて `app/products/picsche/[[...slug]]/route.ts` が処理する。slug が空なら index.html + canonical、それ以外は `SLUG_MAP` に従い該当 HTML を読み、必要なら `<base>` を挿入して返す。未定義の slug やエラー時は 404（NOT_FOUND_HTML）。
-- **Middleware**: `/products/picsche/` および `/products/picsche/xxx/` は 308 で末尾スラッシュを除いた URL にリダイレクトする。
+- **トレイリングスラッシュ**: next.config の `trailingSlash: false` により、Next.js が `/products/picsche/` を `/products/picsche` にリダイレクトする。middleware で同様の 308 を行うと Next の正規化と競合してループするため、middleware では行わない。
 - **静的ファイル**: `GET /products/picsche/assets/*`, `GET /products/picsche/picsche.css` は Next.js が `public/` からそのまま配信する。
 
 ### なぜ Route Handler か（rewrite でない理由）
@@ -82,7 +83,7 @@ public/products/picsche/
 | なぜ rewrite ではなく Route Handler か | Next.js 15 で rewrite 先を public 内 HTML にすると 404 になる事象があり、Route Handler の方が安定。 |
 | 法定ページで &lt;base&gt; を使う理由 | term/privacy/support は相対リンクのみ。base 1 つで解決し、HTML の書き換えを避けられる。tokusho は `../` で assets 等を参照するため base を tokusho/ にしている。 |
 | CSS を CDN にしない理由 | クライアントで JS が実行されない遷移では CDN の Tailwind が効かない場合がある。LP と tokusho とも静的 picsche.css に統一している。 |
-| トレイリングスラッシュを 308 する理由 | 正規 URL を 1 つにし、SEO とリンクの一貫性を保つ。Middleware で PicSche 配下を一括処理。 |
+| トレイリングスラッシュを 308 する理由 | 正規 URL を 1 つにし、SEO とリンクの一貫性を保つ。next.config の trailingSlash: false で Next.js が正規化。 |
 | 404 を HTML で返す理由 | Content-Type が text/html のため、body も最低限の HTML にしておく。 |
 | canonical を LP だけ入れる理由 | 検索エンジン向けに LP の正規 URL を明示するため。法定ページは必要に応じて同様に拡張可能。 |
 | X-Frame-Options: SAMEORIGIN の理由 | 同一オリジンでの将来の埋め込みを許容しつつ、クリックジャッキングを防ぐ。 |

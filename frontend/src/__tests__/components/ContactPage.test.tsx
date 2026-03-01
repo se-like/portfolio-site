@@ -84,7 +84,7 @@ describe('ContactPage', () => {
     ) as jest.Mock;
 
     render(<ContactPage />);
-    
+
     // フォームの入力
     fireEvent.change(await screen.findByLabelText(/お名前/), { target: { value: 'テストユーザー' } });
     fireEvent.change(screen.getByLabelText(/メールアドレス/), { target: { value: 'test@example.com' } });
@@ -121,4 +121,4 @@ describe('ContactPage', () => {
       // 例外は無視
     }
   });
-}); 
+});

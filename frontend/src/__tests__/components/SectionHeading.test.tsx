@@ -41,4 +41,4 @@ describe('SectionHeading', () => {
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent('Test Title');
   });
-}); 
+});

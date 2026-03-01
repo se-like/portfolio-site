@@ -32,7 +32,7 @@ export function useProfileData() {
         }
 
         // キャッシュがない場合や期限切れの場合は新規取得
-        const response = await fetch('/projects.json');
+        const response = await fetch('/api/projects');
         if (!response.ok) {
           throw new Error('プロフィールデータの取得に失敗しました');
         }

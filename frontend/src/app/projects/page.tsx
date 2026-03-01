@@ -33,7 +33,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/projects.json');
+        const response = await fetch('/api/projects');
         if (!response.ok) {
           throw new Error('プロジェクトデータの取得に失敗しました');
         }

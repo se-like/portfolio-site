@@ -1,9 +1,31 @@
 import { NextResponse, NextRequest } from 'next/server';
 import sgMail from '@sendgrid/mail';
 import { z } from 'zod';
+import { Redis } from '@upstash/redis';
+import { Ratelimit } from '@upstash/ratelimit';
 
 // SendGridのAPIキーを設定
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+
+// グローバルレート制限（Upstash Redis 利用時のみ。未設定時はメモリにフォールバック）
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1時間
+const MAX_REQUESTS = 5;
+
+let upstashRatelimit: Ratelimit | null = null;
+function getGlobalRatelimit(): Ratelimit | null {
+  if (upstashRatelimit) return upstashRatelimit;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (url && token) {
+    upstashRatelimit = new Ratelimit({
+      redis: new Redis({ url, token }),
+      limiter: Ratelimit.slidingWindow(MAX_REQUESTS, '1 h'),
+      prefix: 'ratelimit:contact',
+    });
+    return upstashRatelimit;
+  }
+  return null;
+}
 
 // 入力値のバリデーションスキーマ
 const contactFormSchema = z.object({
@@ -40,23 +62,20 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;');
 }
 
-// レート制限の実装
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1時間
-const MAX_REQUESTS = 5; // 1時間あたりの最大リクエスト数
+// レート制限（Upstash 未設定時のフォールバック: インスタンス単位）
+const rateLimitMemory = new Map<string, { count: number; resetTime: number }>();
 
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-
-function isRateLimited(ip: string): boolean {
+function isRateLimitedInMemory(ip: string): boolean {
   const now = Date.now();
-  const limit = rateLimit.get(ip);
+  const limit = rateLimitMemory.get(ip);
 
   if (!limit) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    rateLimitMemory.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return false;
   }
 
   if (now > limit.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    rateLimitMemory.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return false;
   }
 
@@ -92,13 +111,15 @@ function logError(error: unknown, context: string) {
 
 // reCAPTCHAのトークンを検証する関数
 async function verifyRecaptcha(token: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return false;
   try {
     const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+      body: `secret=${secret}&response=${token}`,
     });
 
     const data = await response.json();
@@ -137,15 +158,26 @@ export async function POST(request: NextRequest) {
 
     // IPアドレスの取得
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
-    
-    // レート制限のチェック
-    const limited = isRateLimited(ip);
-    if (limited) {
-      logError('レート制限超過', `IP: ${ip}`);
-      return NextResponse.json(
-        { error: 'リクエスト制限を超えました。しばらく時間をおいてから再度お試しください。' },
-        { status: 429 }
-      );
+
+    // レート制限（Upstash 設定時はグローバル、未設定時はメモリでインスタンス単位）
+    const globalRl = getGlobalRatelimit();
+    if (globalRl) {
+      const { success } = await globalRl.limit(ip);
+      if (!success) {
+        logError('レート制限超過', `IP: ${ip}`);
+        return NextResponse.json(
+          { error: 'リクエスト制限を超えました。しばらく時間をおいてから再度お試しください。' },
+          { status: 429 }
+        );
+      }
+    } else {
+      if (isRateLimitedInMemory(ip)) {
+        logError('レート制限超過', `IP: ${ip}`);
+        return NextResponse.json(
+          { error: 'リクエスト制限を超えました。しばらく時間をおいてから再度お試しください。' },
+          { status: 429 }
+        );
+      }
     }
 
     const formData = await request.json();

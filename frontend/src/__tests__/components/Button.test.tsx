@@ -1,38 +1,56 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Button from '@/components/common/Button';
+import Button from '@/components/ui/Button';
 
 describe('Button', () => {
-  it('正しくレンダリングされる', () => {
-    render(<Button>テストボタン</Button>);
-    expect(screen.getByRole('button', { name: 'テストボタン' })).toBeInTheDocument();
+  it('renders with default props', () => {
+    render(<Button>Click me</Button>);
+    const button = screen.getByRole('button', { name: /click me/i });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass('bg-gradient-to-l');
   });
 
-  it('クリックイベントが発火する', () => {
+  it('renders with different variants', () => {
+    const { rerender } = render(<Button variant="primary">Primary</Button>);
+    expect(screen.getByRole('button')).toHaveClass('from-indigo-500/20');
+
+    rerender(<Button variant="secondary">Secondary</Button>);
+    expect(screen.getByRole('button')).toHaveClass('bg-gray-600/90');
+
+    rerender(<Button variant="outline">Outline</Button>);
+    expect(screen.getByRole('button')).toHaveClass('from-slate-500/20');
+  });
+
+  it('renders with different sizes', () => {
+    const { rerender } = render(<Button size="sm">Small</Button>);
+    expect(screen.getByRole('button')).toHaveClass('px-4 py-2 text-sm');
+
+    rerender(<Button size="md">Medium</Button>);
+    expect(screen.getByRole('button')).toHaveClass('px-6 py-3 text-base');
+
+    rerender(<Button size="lg">Large</Button>);
+    expect(screen.getByRole('button')).toHaveClass('px-8 py-4 text-lg');
+  });
+
+  it('renders as a link when href is provided', () => {
+    render(<Button href="/test">Link Button</Button>);
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', '/test');
+  });
+
+  it('handles click events', () => {
     const handleClick = jest.fn();
-    render(<Button onClick={handleClick}>テストボタン</Button>);
-    fireEvent.click(screen.getByRole('button', { name: 'テストボタン' }));
+    render(<Button onClick={handleClick}>Click me</Button>);
+    fireEvent.click(screen.getByRole('button'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it('disabled状態が正しく反映される', () => {
-    render(<Button disabled>テストボタン</Button>);
-    expect(screen.getByRole('button', { name: 'テストボタン' })).toBeDisabled();
+  it('applies custom className', () => {
+    render(<Button className="custom-class">Custom</Button>);
+    expect(screen.getByRole('button')).toHaveClass('custom-class');
   });
 
-  it('type属性が正しく反映される', () => {
-    render(<Button type="submit">テストボタン</Button>);
-    expect(screen.getByRole('button', { name: 'テストボタン' })).toHaveAttribute('type', 'submit');
+  it('is disabled when disabled prop is true', () => {
+    render(<Button disabled>Disabled</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
   });
-
-  it('variant属性が正しく反映される', () => {
-    render(<Button variant="primary">テストボタン</Button>);
-    const button = screen.getByRole('button', { name: 'テストボタン' });
-    expect(button).toHaveClass('bg-blue-600');
-  });
-
-  it('size属性が正しく反映される', () => {
-    render(<Button size="lg">テストボタン</Button>);
-    const button = screen.getByRole('button', { name: 'テストボタン' });
-    expect(button).toHaveClass('text-lg');
-  });
-}); 
+});

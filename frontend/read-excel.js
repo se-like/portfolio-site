@@ -19,6 +19,8 @@ sheetNames.forEach(sheetName => {
   console.log(JSON.stringify(jsonData, null, 2));
 });
 
-// 結果をJSONファイルに保存
-fs.writeFileSync(path.join(__dirname, 'public', 'resume-data.json'), JSON.stringify(result, null, 2));
-console.log('\n結果をresume-data.jsonに保存しました。');
+// 結果をJSONファイルに保存（public 外。フロントからは参照しない）
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+fs.writeFileSync(path.join(dataDir, 'resume-data.json'), JSON.stringify(result, null, 2));
+console.log('\n結果を data/resume-data.json に保存しました。');

@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  trailingSlash: false,
+  async redirects() {
+    return [
+      // 旧エンドポイントのリダイレクト（正規 URL は小文字のみ。大文字混じりは 404）
+      { source: "/projects.json", destination: "/api/projects", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

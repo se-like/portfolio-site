@@ -19,9 +19,7 @@ import { z } from 'zod';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { ContactFormProps } from '@/types/contact';
 
-const siteKey = typeof window !== 'undefined'
-  ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
-  : process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+const siteKey = (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? '').trim();
 
 const createFormSchema = (requireRecaptcha: boolean) => z.object({
   name: z.string()
@@ -48,7 +46,7 @@ const createFormSchema = (requireRecaptcha: boolean) => z.object({
     : z.string().optional(),
 });
 
-const hasRecaptcha = !!siteKey.trim();
+const hasRecaptcha = !!siteKey;
 
 type FormSchema = z.infer<ReturnType<typeof createFormSchema>>;
 

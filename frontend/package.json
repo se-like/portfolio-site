@@ -21,6 +21,8 @@
     "@hookform/resolvers": "^5.2.2",
     "@sendgrid/mail": "^8.1.6",
     "@types/react-google-recaptcha": "^2.1.9",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.3",
     "csurf": "^1.11.0",
     "ioredis": "^5.9.3",
     "next": "15.5.12",
